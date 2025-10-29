@@ -1,0 +1,183 @@
+/* HEADER */
+header {
+  background: linear-gradient(135deg, var(--azul-oscuro) 0%, #001d3b 100%);
+  color: var(--blanco);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 30px;
+  gap: 20px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  height: 90px;
+  width: auto;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logo-text h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+  margin: 0;
+  line-height: 1;
+}
+
+.slogan {
+  font-size: 1.1rem;
+  opacity: 0.95;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  margin-top: 8px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  height: 60px;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--social-bg);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  height: 40px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.social-link svg,
+.social-link img {
+  display: block;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+}
+
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  color: white;
+  text-decoration: none;
+  height: 40px;
+  line-height: 1;
+}
+
+.whatsapp-btn:hover {
+  background: #25D366;
+}
+
+.social-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* BOTÓN CARRITO */
+#verCarrito {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--rojo-colorcopy) 0%, var(--rojo-oscuro) 100%);
+  color: white;
+  border: none;
+  padding: 0 20px;
+  border-radius: 25px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(200, 35, 51, 0.3);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  margin: 0;
+  white-space: nowrap;
+}
+
+#verCarrito:hover {
+  background: linear-gradient(135deg, var(--rojo-oscuro) 0%, #8b1a26 100%);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(200, 35, 51, 0.4);
+}
+
+/* RESPONSIVE HEADER */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    padding: 20px 15px;
+  }
+  
+  .logo-section {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .logo {
+    height: 70px;
+  }
+  
+  .logo-text h1 {
+    font-size: 2.2rem;
+  }
+  
+  .slogan {
+    font-size: 0.95rem;
+  }
+  
+  #verCarrito {
+    font-size: 0.9rem;
+    padding: 0 15px;
+    min-width: fit-content;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    height: 60px;
+  }
+  
+  .logo-text h1 {
+    font-size: 1.8rem;
+  }
+  
+  .slogan {
+    font-size: 0.85rem;
+  }
+}

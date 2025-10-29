@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Colorcopy - Diseño & Corte CNC</title>
+  <link rel="icon" type="image/png" href="img/logo.jpg">
+  
+  <!-- CARGAR TODOS LOS ARCHIVOS CSS INDIVIDUALMENTE -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/categorias.css" />
+  <link rel="stylesheet" href="css/productos.css" />
+  <link rel="stylesheet" href="css/modal.css" />
+  <link rel="stylesheet" href="css/carrito.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/nosotros.css" />
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo-section">
+        <img src="img/logo.jpg" alt="Colorcopy Logo" class="logo" />
+        <div class="logo-text">
+          <h1>COLORCOPY</h1>
+          <p class="slogan">Diseño & Corte CNC</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="socials">
+          <a href="https://www.instagram.com/colorcopystore?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" aria-label="Instagram" class="social-link">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="#fff" stroke-width="1.4"/><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" stroke="#fff" stroke-width="1.4"/><path d="M17.5 6.5h.01" stroke="#fff" stroke-width="1.6"/></svg>
+          </a>
+          <a href="https://www.facebook.com/colorcopyag" target="_blank" aria-label="Facebook" class="social-link">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a4 4 0 0 0-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 0 1 1-1h3z" stroke="#fff" stroke-width="1.4"/></svg>
+          </a>
+          <a href="https://wa.me/5493547656901" target="_blank" class="social-link whatsapp-btn">
+            <img src="img/whatsapp-icon.png" alt="WhatsApp" class="whatsapp-icon">
+            <span class="whatsapp-text">Contactanos</span>
+          </a>
+        </div>
+        <button id="verCarrito">Carrito 🛒</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="categorias-container" class="categorias-grid"></section>
+    <section id="productos-container" class="productos-grid oculto"></section>
+  </main>
+
+  <!-- =================== SOBRE NOSOTROS =================== -->
+  <section id="sobre-nosotros-container" class="oculto">
+    <div class="sobre-nosotros-content">
+      <div class="sobre-nosotros-header">
+        <h1>Sobre nosotros</h1>
+        <p>Más de 10 años creando soluciones en diseño y corte CNC</p>
+      </div>
+
+      <div class="sobre-nosotros-grid">
+        <div class="sobre-nosotros-texto">
+          <div class="texto-seccion">
+          <h2>¿Quiénes somos?</h2>
+          <p>
+            En <strong>Colorcopy</strong> llevamos más de 10 años dedicados al diseño y la gráfica. 
+            <strong>Ahora integramos productos y cortes con tecnología CNC</strong>. 
+            Te invitamos a acercarte a <strong>nuestra sucursal</strong> para conocer nuestro amplio catálogo de productos que tenemos para ofrecerte, 
+            <strong>personalizables a tu medida.</strong> Estamos en Dr. Raúl Alfonsín 151, Alta Gracia, Córdoba.
+          </p>
+        </div>
+
+          <div class="texto-seccion">
+            <h2>¿Por qué elegirnos?</h2>
+            <ul>
+              <li>✅ Amplio catálogo de productos CNC y diseños personalizados</li>
+              <li>✅ Materiales de primera calidad</li>
+              <li>✅ Entregas puntuales</li>
+              <li>✅ Atención personalizada</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sobre-nosotros-video">
+          <h2>Conocé nuestro proceso</h2>
+          <div class="video-carousel">
+            <button class="video-btn prev" id="prevVideo">❮</button>
+            <video id="videoPlayer" muted playsinline webkit-playsinline>
+              Tu navegador no soporta videos HTML5.
+            </video>
+            <button class="video-btn next" id="nextVideo">❯</button>
+            
+            <!-- Elementos de progreso y contador -->
+            <div class="video-progress">
+              <div class="video-progress-bar"></div>
+            </div>
+            <div class="video-counter">1 / 5</div>
+            <div class="video-muted-indicator">🔇</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sobre-nosotros-contacto">
+        <h2>¿Tenés un proyecto en mente?</h2>
+        <p>Contactanos y hagámoslo realidad juntos</p>
+        <button class="btn-contacto" onclick="window.open('https://wa.me/5493547656901', '_blank')">
+          Contactar por WhatsApp
+        </button>
+      </div>
+
+      <button id="btn-volver-inicio" class="btn-volver">⬅ Volver al Inicio</button>
+    </div>
+  </section>
+
+  <!-- Modal producto -->
+  <div id="producto-modal" class="modal oculto">
+    <div class="modal-contenido producto-modal-contenido">
+      <span class="cerrar-modal" id="cerrar-producto">&times;</span>
+      <div class="producto-detalle">
+        <div class="detalle-imagen">
+          <img id="detalle-img" src="" alt="Imagen producto" />
+        </div>
+        <div class="detalle-info">
+          <div class="texto-contenedor">
+            <h2 id="detalle-nombre"></h2>
+            <p id="detalle-descripcion"></p>
+          </div>
+          
+          <!-- CONTENEDOR DE OPCIONES CON SCROLL -->
+          <div id="opciones-container">
+            <!-- MEDIDAS -->
+            <div class="opcion">
+              <label>Medida</label>
+              <div class="opcion-contenedor">
+                <div id="opciones-medidas"></div>
+                <button class="btn-personalizar" id="btn-personalizar-medida" title="Personalizar medida">✏️</button>
+              </div>
+              <div id="personalizado-medida-wrapper" style="display:none; margin-top:8px;">
+                <div class="input-personalizado">
+                  <input type="text" id="medida-personalizada" placeholder="Ej: 50x50cm" />
+                  <button class="btn-confirmar" id="btn-confirmar-medida">✓</button>
+                </div>
+                <div class="confirmacion-mensaje" id="confirmacion-medida" style="display:none;">
+                  ✓ Se ha registrado su respuesta
+                </div>
+              </div>
+            </div>
+
+            <!-- COLOR -->
+            <div class="opcion" id="opcion-color-wrapper">
+              <label>Color</label>
+              <div class="opcion-contenedor">
+                <div id="opciones-colores"></div>
+                <button class="btn-personalizar" id="btn-personalizar-color" title="Personalizar color">✏️</button>
+              </div>
+              <div id="personalizado-color-wrapper" style="display:none; margin-top:8px;">
+                <div class="input-personalizado">
+                  <input type="text" id="color-personalizado" placeholder="Ej: Azul" />
+                  <button class="btn-confirmar" id="btn-confirmar-color">✓</button>
+                </div>
+                <div class="confirmacion-mensaje" id="confirmacion-color" style="display:none;">
+                  ✓ Se ha registrado su respuesta
+                </div>
+              </div>
+            </div>
+
+            <!-- MATERIAL -->
+            <div class="opcion" id="opcion-material-wrapper">
+              <label>Material</label>
+              <div id="opciones-material"></div>
+            </div>
+
+            <!-- ACABADO -->
+            <div class="opcion" id="opcion-acabado-wrapper" style="display:none;">
+              <label>Acabado</label>
+              <div id="opciones-acabado"></div>
+            </div>
+
+            <!-- TERMINACIÓN -->
+            <div class="opcion" id="opcion-terminacion-wrapper" style="display:none;">
+              <label>Terminación</label>
+              <div id="opciones-terminacion"></div>
+            </div>
+
+            <!-- CANTIDAD -->
+            <div class="opcion">
+              <label>Cantidad</label>
+              <div class="cantidad-container">
+                <button class="btn-cantidad" id="btn-restar">-</button>
+                <input type="number" id="input-cantidad" value="1" min="1" max="99" />
+                <button class="btn-cantidad" id="btn-sumar">+</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- SECCIÓN FIJA (FUERA DEL SCROLL) -->
+          <div class="acciones-fijas">
+            <!-- PRECIO -->
+            <div class="opcion">
+              <label>Precio</label>
+              <div id="detalle-precio"><strong>A consultar</strong></div>
+            </div>
+            
+            <!-- BOTONES -->
+            <div class="modal-actions">
+              <button id="btn-agregar-carrito">Agregar al carrito</button>
+              <button id="btn-cancelar" class="btn-gris">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal carrito -->
+  <div id="carrito-modal" class="modal oculto">
+    <div class="modal-contenido">
+      <span class="cerrar-modal" id="cerrar-carrito">&times;</span>
+      <h2>Tu Carrito</h2>
+      <ul id="lista-carrito"></ul>
+      <p id="total"></p>
+      
+      <div class="carrito-form">
+        <input type="text" id="cliente-nombre" placeholder="Ingrese su nombre" />
+        
+        <!-- SECCIÓN MEDIO DE PAGO -->
+        <div class="medio-pago-section">
+          <label>Medio de Pago</label>
+          <div class="medio-pago-opciones">
+            <label><input type="radio" name="medio-pago" value="efectivo" checked /> Efectivo</label>
+            <label><input type="radio" name="medio-pago" value="transferencia" /> Transferencia</label>
+            <label><input type="radio" name="medio-pago" value="debito" /> Débito / Mercado Pago</label>
+            <label><input type="radio" name="medio-pago" value="credito" /> Crédito</label>
+          </div>
+          
+          <!-- Opciones de bancos para crédito -->
+          <div id="bancos-credito-wrapper" class="bancos-credito" style="display:none;">
+            <label style="font-weight: 600; margin-bottom: 8px; display: block;">Selecciona tu banco:</label>
+            <label><input type="radio" name="banco" value="Santander" /> Santander</label>
+            <label><input type="radio" name="banco" value="Naranja" /> Naranja</label>
+            <label><input type="radio" name="banco" value="MercadoCredito" /> Mercado Credito</label>
+            <div class="info-mensaje" style="margin-top: 10px;">
+              ℹ️ Consultar cuotas disponibles
+            </div>
+          </div>
+        </div>
+        
+        <div class="envio-opciones">
+          <label><input type="radio" name="entrega" value="retiro" checked /> Retira</label>
+          <label><input type="radio" name="entrega" value="envio" /> Envío</label>
+        </div>
+        
+        <div id="direccion-wrapper" style="display:none;">
+          <label>Dirección</label>
+          <input type="text" id="cliente-direccion" placeholder="Calle, número, ciudad" />
+        </div>
+        
+        <!-- BOTONES DEL CARRITO -->
+        <div class="modal-buttons">
+          <button id="finalizarCompra">Finalizar Compra</button>
+          <button id="cerrarCarrito">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal personalización de item -->
+  <div id="modal-personalizacion-item" class="modal oculto">
+    <div class="modal-contenido personalizacion-modal-contenido">
+      <h2>Personalizar Producto</h2>
+      <div class="personalizacion-form">
+        <label for="texto-personalizacion">Que te gustaría personalizar de este producto? </label>
+        <textarea id="texto-personalizacion" placeholder="Ingrese aquí..."></textarea>
+        
+        <label class="checkbox-label">
+          <input type="checkbox" id="checkbox-diseno-personalizado" />
+          <span>Quiero diseño personalizado (seguir por WhatsApp)</span>
+        </label>
+        
+        <div class="modal-buttons">
+          <button id="btn-guardar-personalizacion">Guardar</button>
+          <button id="btn-cancelar-personalizacion" class="btn-gris">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p class="footer-ubicacion">
+        📍 Dr. Raúl Alfonsín 151, Alta Gracia, Córdoba
+      </p>
+      <button class="btn-nosotros">Sobre Nosotros</button>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
