@@ -158,7 +158,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
   max-width: 550px;
   min-height: 600px;
   height: 85vh;
@@ -170,7 +170,7 @@
 }
 
 .opcion em {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-style: italic;
   color: var(--gris-oscuro);
   font-weight: 300;
@@ -178,7 +178,7 @@
 
 .opcion label {
   display: block;
-  font-family: 'Lora', serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 1rem;
   margin-bottom: 10px;
@@ -206,7 +206,7 @@
 
 .opcion button, 
 .opcion .chip {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   border-radius: 20px;
   padding: 10px 16px;
   border: none;
@@ -218,7 +218,7 @@
 }
 
 .chip {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   border-radius: 20px;
   padding: 8px 14px;
   border: none;
@@ -252,7 +252,7 @@
 .modal-actions button {
   flex: 1;
   padding: 12px 20px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.8px;
@@ -266,16 +266,42 @@
   overflow: hidden;
 }
 
-/* BOTÓN AGREGAR AL CARRITO MEJORADO */
+/* BOTÓN AGREGAR AL CARRITO MEJORADO - MÁS GRANDE */
+#btn-agregar-carrito,
+.btn-gris {
+  min-height: 48px !important;
+  padding: 14px 22px !important;
+  font-size: 0.95rem !important;
+  line-height: 1 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+/* Botón rojo (Agregar al carrito) */
 #btn-agregar-carrito {
-  background: linear-gradient(135deg, var(--rojo-colorcopy) 0%, var(--rojo-oscuro) 100%);
-  color: white;
-  box-shadow: 
+  background: linear-gradient(135deg, var(--rojo-colorcopy) 0%, var(--rojo-oscuro) 100%) !important;
+  color: #fff !important;
+  box-shadow:
     0 4px 15px rgba(220, 53, 69, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  position: relative;
-  margin-bottom: 20px;
+  flex: 0.6 !important; /* 60% del ancho disponible */
 }
+
+/* Hover del botón rojo */
+#btn-agregar-carrito:hover {
+  background: linear-gradient(135deg, var(--rojo-oscuro) 0%, var(--rojo-colorcopy) 100%) !important;
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 20px rgba(220, 53, 69, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
 
 #btn-agregar-carrito::before {
   content: '';
@@ -307,22 +333,25 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* BOTÓN CANCELAR MEJORADO */
+
+
+/* BOTÓN CANCELAR MEJORADO - MÁS PEQUEÑO */
 .btn-gris {
   background: linear-gradient(135deg, #6c757d 0%, #495057 100%) !important;
-  color: white;
-  box-shadow: 
+  color: #fff !important;
+  box-shadow:
     0 4px 15px rgba(108, 117, 125, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  margin-bottom: 20px;
+  flex: 0.4 !important; /* 40% del ancho disponible */
 }
 
+/* Hover del botón gris */
 .btn-gris:hover {
+  background: linear-gradient(135deg, #495057 0%, #6c757d 100%) !important;
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 6px 20px rgba(108, 117, 125, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  background: linear-gradient(135deg, #495057 0%, #6c757d 100%) !important;
 }
 
 .btn-gris:active {
@@ -340,7 +369,7 @@
   font-size: 0.9rem;
   margin: 0 !important;
   flex-shrink: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(13, 110, 253, 0.3);
@@ -356,7 +385,7 @@
   background: linear-gradient(135deg, var(--rojo-colorcopy) 0%, var(--rojo-oscuro) 100%) !important;
   padding: 10px 14px !important;
   margin: 0 !important;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   transition: all 0.3s ease;
   color: white;
@@ -380,7 +409,7 @@
   padding: 8px 12px;
   border: 1px solid var(--gris-medio);
   border-radius: 8px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.9rem;
   transition: all 0.3s ease;
 }
@@ -395,16 +424,16 @@
 #detalle-precio {
   background: linear-gradient(135deg, #2e7d32 0%, #388e3c 50%, #43a047 100%) !important;
   color: white !important;
-  padding: 14px 24px;
+  padding: 12px 20px;
   border-radius: 20px;
   text-align: center;
   font-weight: 700;
   box-shadow: 
     0 4px 15px rgba(46, 125, 50, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  margin: 10px auto 5px;
+  margin: 8px auto 5px;
   max-width: fit-content;
-  min-width: 160px;
+  min-width: 140px;
   border: 2px solid rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
@@ -426,9 +455,9 @@
 }
 
 #detalle-precio strong {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: white !important;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: 0.5px;
   position: relative;
@@ -436,27 +465,69 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* CONTENEDOR DE OPCIONES CON SCROLL */
+/* CONTENEDOR DE OPCIONES CON SCROLL - MÁS ESPACIO */
 #opciones-container {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 18px;
   flex: 1;
   overflow-y: auto;
-  max-height: calc(85vh - 180px);
-  padding-right: 10px;
-  margin-bottom: 15px;
+  max-height: calc(85vh - 200px);
+  padding: 20px;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.9) 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(10, 61, 98, 0.08);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.03),
+    0 4px 12px rgba(10, 61, 98, 0.06);
 }
 
+/* ACCIONES FIJAS - OCUPANDO MENOS ESPACIO */
 .acciones-fijas {
   flex-shrink: 0;
   margin-top: auto;
-  padding-top: 15px;
-  border-top: 1px solid var(--gris-medio);
+  padding: 8px 8px 0;
+  border-top: 2px solid rgba(10, 61, 98, 0.1);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.95) 100%);
+  min-height: auto;
 }
 
 .acciones-fijas .opcion {
-  margin-bottom: 12px;
+  margin-bottom: 5px;
+}
+
+/* TÍTULO PRECIO CENTRADO */
+.acciones-fijas .opcion label {
+  text-align: center;
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Botones más compactos en acciones fijas */
+.acciones-fijas .modal-actions {
+  margin-top: 8px;
+  gap: 8px;
+}
+
+.acciones-fijas .modal-actions button {
+  padding: 10px 16px;
+  min-height: 40px;
+  font-size: 0.85rem;
+  margin-bottom: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.acciones-fijas .modal-actions .btn-gris {
+  flex: 0.4 !important;
+}
+
+/* Asegura la proporción también dentro de acciones fijas */
+.acciones-fijas .modal-actions #btn-agregar-carrito {
+  flex: 0.6 !important;
 }
 
 /* Scroll personalizado */
@@ -496,7 +567,7 @@
   background: var(--azul-oscuro);
 }
 
-/* RESPONSIVE MODALES - VIEJAS (mantenemos las que tenías) */
+/* RESPONSIVE MODALES */
 @media (max-width: 768px) {
   .modal-contenido {
     padding: 20px;
@@ -548,15 +619,24 @@
     font-size: 1rem;
   }
 
-  #detalle-precio {
+  /* En móvil, ajustamos los botones para que sean del mismo tamaño */
+  #btn-agregar-carrito,
+  .btn-gris {
+    flex: 1;
+    min-height: 46px;
     padding: 12px 20px;
-    min-width: 140px;
+    font-size: 0.7rem;
+  }
+
+  #detalle-precio {
+    padding: 10px 16px;
+    min-width: 130px;
     max-width: 90%;
-    margin: 15px auto 10px;
+    margin: 12px auto 8px;
   }
 
   #detalle-precio strong {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     word-wrap: break-word;
     white-space: normal;
     text-align: center;
@@ -570,8 +650,15 @@
   }
 
   .acciones-fijas {
-    margin-top: 20px;
-    padding-top: 20px;
+    margin-top: 15px;
+    padding-top: 15px;
+  }
+
+  /* En móvil, acciones fijas más compactas */
+  .acciones-fijas .modal-actions button {
+    padding: 12px 18px;
+    min-height: 44px;
+    font-size: 0.95rem;
   }
 }
 
@@ -593,7 +680,7 @@
   }
 
   #detalle-precio {
-    padding: 10px 16px;
+    padding: 8px 14px;
     min-width: 120px;
   }
 
@@ -609,12 +696,20 @@
     padding: 12px 18px;
     font-size: 0.95rem;
   }
-}
 
-/* TÍTULO PRECIO CENTRADO */
-.acciones-fijas .opcion label {
-  text-align: center;
-  display: block;
-  width: 100%;
-  margin-bottom: 8px;
+  /* En móvil pequeño, acciones fijas aún más compactas */
+  .acciones-fijas {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+
+  .acciones-fijas .modal-actions {
+    gap: 6px;
+  }
+
+  .acciones-fijas .modal-actions button {
+    padding: 10px 14px;
+    min-height: 40px;
+    font-size: 0.9rem;
+  }
 }
