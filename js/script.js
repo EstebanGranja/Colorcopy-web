@@ -228,7 +228,7 @@ function mostrarProductosCategoria(categoriaId) {
     // Botón volver
     const volver = document.createElement("div");
     volver.className = "producto volver-btn";
-    volver.innerHTML = `<h3>⬅ Volver a categorías</h3>`;
+    volver.innerHTML = `<h3>Volver a categorías</h3>`;
     volver.addEventListener("click", () => {
         productosContainer.classList.add("oculto");
         categoriasContainer.classList.remove("oculto");

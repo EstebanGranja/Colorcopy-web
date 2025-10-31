@@ -12,7 +12,7 @@
 .producto {
   background: var(--blanco);
   border-radius: 15px;
-  padding: 20px;
+  padding: 15px; /* Reducido de 20px */
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: all 0.3s ease;
@@ -41,35 +41,35 @@
 
 .producto img {
   width: 100%;
-  height: 280px;
+  height: 200px; /* Reducido de 280px (aprox 28% menos) */
   object-fit: contain;
   object-position: center;
   border-radius: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px; /* Reducido de 15px */
   border: 1px solid var(--gris-medio);
   flex-shrink: 0;
   background-color: #f9f9f9;
-  padding: 10px;
+  padding: 8px; /* Reducido de 10px */
 }
 
 .producto-info {
   background: rgba(46, 125, 50, 0.92);
   color: white !important;
-  padding: 10px 20px;
+  padding: 8px 16px; /* Reducido de 10px 20px */
   border-radius: 25px;
-  margin: 12px auto 8px;
+  margin: 8px auto 6px; /* Reducido de 12px auto 8px */
   text-align: center;
   font-weight: 700;
   box-shadow: 0 3px 10px rgba(46, 125, 50, 0.4);
   display: inline-block;
   max-width: fit-content;
-  min-width: 140px;
+  min-width: 120px; /* Reducido de 140px */
 }
 
 .producto-info strong {
   font-family: 'Inter', sans-serif;
   color: white !important;
-  font-size: 1.15rem;
+  font-size: 1rem; /* Reducido de 1.15rem */
   font-weight: 700;
   letter-spacing: 0.3px;
   white-space: nowrap;
@@ -77,8 +77,8 @@
 
 .producto h3 {
   color: var(--azul-oscuro);
-  margin: 10px 0;
-  font-size: 1.3rem;
+  margin: 8px 0; /* Reducido de 10px 0 */
+  font-size: 1.15rem; /* Reducido de 1.3rem */
   font-weight: 600;
   letter-spacing: 0.5px;
 }
@@ -88,16 +88,16 @@
   font-weight: 700 !important;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-size: 1.4rem;
+  font-size: 1.25rem; /* Reducido de 1.4rem */
 }
 
 .producto p {
   font-family: 'Inter', sans-serif;
   color: var(--gris-oscuro);
-  margin-bottom: 15px;
-  font-size: 0.9rem;
+  margin-bottom: 10px; /* Reducido de 15px */
+  font-size: 0.85rem; /* Reducido de 0.9rem */
   font-weight: 300;
-  line-height: 1.5;
+  line-height: 1.4; /* Reducido de 1.5 */
   flex-grow: 1;
 }
 
@@ -106,12 +106,12 @@
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  font-size: 0.9rem;
+  font-size: 0.85rem; /* Reducido de 0.9rem */
 }
 
 .producto strong {
   color: var(--rojo-colorcopy);
-  font-size: 1.3rem;
+  font-size: 1.15rem; /* Reducido de 1.3rem */
   font-weight: 700;
 }
 
@@ -131,10 +131,10 @@
   transform: translate(-50%, -50%);
   background: rgba(200, 35, 51, 0.9);
   color: white;
-  padding: 10px 20px;
+  padding: 8px 16px; /* Reducido de 10px 20px */
   border-radius: 25px;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1rem; /* Reducido de 1.1rem */
   text-transform: uppercase;
   letter-spacing: 1px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -151,11 +151,11 @@
 /* ETIQUETAS DE TIEMPO DE ENTREGA */
 .etiqueta-entrega {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  padding: 8px 12px;
+  top: 10px; /* Reducido de 12px */
+  left: 10px; /* Reducido de 12px */
+  padding: 6px 10px; /* Reducido de 8px 12px */
   border-radius: 15px;
-  font-size: 0.7rem;
+  font-size: 0.65rem; /* Reducido de 0.7rem */
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.3px;

@@ -1,6 +1,6 @@
 /* HEADER */
 header {
-  background: linear-gradient(135deg, var(--azul-oscuro) 0%, #001d3b 100%);
+  background: linear-gradient(135deg, var(--azul-oscuro) 0%, #002750 100%);
   color: var(--blanco);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
@@ -70,12 +70,13 @@ header {
   justify-content: center;
   padding: 10px;
   border-radius: 8px;
-  background: var(--social-bg);
+  background: rgba(0, 29, 59, 0.8); /* Azul oscuro más intenso */
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   height: 40px;
   line-height: 1;
   vertical-align: middle;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .social-link svg,
@@ -95,10 +96,27 @@ header {
   text-decoration: none;
   height: 40px;
   line-height: 1;
+  background: rgba(0, 29, 59, 0.8); /* Fondo oscuro por defecto */
 }
 
 .whatsapp-btn:hover {
-  background: #25D366;
+  background: #25D366; /* Verde WhatsApp */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(37, 211, 102, 0.3);
+}
+
+/* Hover específico para Instagram */
+.social-link[href*="instagram"]:hover {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad); /* Violeta suave */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(155, 89, 182, 0.4);
+}
+
+/* Hover específico para Facebook */
+.social-link[href*="facebook"]:hover {
+  background: #4267B2; /* Azul suave Facebook */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(66, 103, 178, 0.4);
 }
 
 .social-link:hover {
