@@ -13,15 +13,7 @@
 .modal-contenido {
   position: relative;
   background: 
-    /* Patrón de franjas grises muy sutiles */
-    linear-gradient(45deg, rgba(248, 249, 250, 0.8) 25%, transparent 25%),
-    linear-gradient(-45deg, rgba(248, 249, 250, 0.8) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, rgba(248, 249, 250, 0.8) 75%),
-    linear-gradient(-45deg, transparent 75%, rgba(248, 249, 250, 0.8) 75%),
-    /* Fondo base */
     linear-gradient(135deg, var(--blanco) 0%, #f8f9fa 100%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
   padding: 35px;
   border-radius: 20px;
   width: 90%;
@@ -33,6 +25,55 @@
   border: 1px solid rgba(255, 255, 255, 0.8);
   max-height: 90vh;
   overflow-y: auto;
+}
+
+.modal-contenido::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    url('../img/fondomodal.jpg') no-repeat center center;
+  background-size: cover;
+  filter: grayscale(50%) opacity(0.10) saturate(120%);
+  border-radius: 20px;
+  z-index: -1;
+}
+
+.producto-modal-contenido {
+  position: relative;
+  background: 
+    linear-gradient(135deg, var(--blanco) 0%, #f8f9fa 100%);
+  max-width: 1100px;
+  width: 95%;
+  display: flex;
+  gap: 30px;
+  padding: 30px;
+  border-radius: 20px;
+  z-index: 1100;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.producto-modal-contenido::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    url('../img/fondomodal.jpg') no-repeat center center;
+  background-size: cover;
+  filter: grayscale(50%) opacity(0.10) saturate(120%);
+  border-radius: 20px;
+  z-index: -1;
 }
 
 .modal-contenido h2 {
@@ -115,14 +156,6 @@
 }
 
 /* MODAL PRODUCTO */
-.producto-modal-contenido {
-  max-width: 1100px;
-  width: 95%;
-  display: flex;
-  gap: 30px;
-  padding: 30px;
-}
-
 .producto-detalle {
   display: flex;
   gap: 30px;
@@ -487,10 +520,27 @@
 .acciones-fijas {
   flex-shrink: 0;
   margin-top: auto;
-  padding: 8px 8px 0;
-  border-top: 2px solid rgba(10, 61, 98, 0.1);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.95) 100%);
+  padding: 5px;
+  margin-bottom: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 15px;
+  border: 2px solid rgba(10, 61, 98, 0.1);
+  box-shadow: 0 8px 25px rgba(10, 61, 98, 0.08);
+  position: relative;
+  backdrop-filter: blur(10px);
   min-height: auto;
+}
+
+.acciones-fijas::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rojo-colorcopy), var(--azul-principal));
+  border-radius: 2px;
 }
 
 .acciones-fijas .opcion {
@@ -651,7 +701,8 @@
 
   .acciones-fijas {
     margin-top: 15px;
-    padding-top: 15px;
+    padding: 20px;
+    border-radius: 12px;
   }
 
   /* En móvil, acciones fijas más compactas */
@@ -700,7 +751,8 @@
   /* En móvil pequeño, acciones fijas aún más compactas */
   .acciones-fijas {
     margin-top: 12px;
-    padding-top: 12px;
+    padding: 15px;
+    border-radius: 10px;
   }
 
   .acciones-fijas .modal-actions {
