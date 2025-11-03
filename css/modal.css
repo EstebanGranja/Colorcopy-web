@@ -37,7 +37,7 @@
   background: 
     url('../img/fondomodal.jpg') no-repeat center center;
   background-size: cover;
-  filter: grayscale(50%) opacity(0.10) saturate(120%);
+  filter: grayscale(0%) opacity(0.12) saturate(120%);
   border-radius: 20px;
   z-index: -1;
 }
@@ -71,10 +71,11 @@
   background: 
     url('../img/fondomodal.jpg') no-repeat center center;
   background-size: cover;
-  filter: grayscale(50%) opacity(0.10) saturate(120%);
+  filter: grayscale(0%) opacity(0.12) saturate(120%);
   border-radius: 20px;
   z-index: -1;
 }
+
 
 .modal-contenido h2 {
   color: var(--azul-oscuro);
@@ -175,6 +176,21 @@
   border: 2px solid var(--gris-medio);
   min-height: 400px;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: relative; /* Agregado para el pseudo-elemento */
+  overflow: hidden; /* Para contener la franja */
+}
+
+.detalle-imagen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rojo-colorcopy), var(--azul-principal));
+  border-radius: 2px;
+  z-index: 1;
 }
 
 .detalle-imagen img {
@@ -185,6 +201,8 @@
   object-fit: contain;
   object-position: center;
   border-radius: 10px;
+  position: relative; /* Para que esté por encima de la franja */
+  z-index: 0;
 }
 
 .detalle-info {
@@ -711,6 +729,23 @@
     min-height: 44px;
     font-size: 0.95rem;
   }
+  .modal-contenido::before,
+  .producto-modal-contenido::before {
+    position: fixed;
+    /* Calcular posición basada en el modal */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 40px); /* Restar el padding del modal */
+    height: calc(100% - 40px);
+    max-width: 500px; /* Mismo max-width que el modal */
+    max-height: 90vh; /* Mismo max-height que el modal */
+  }
+  
+  /* Ajuste específico para el modal de producto en móviles */
+  .producto-modal-contenido::before {
+    max-width: calc(100% - 40px);
+  }
 }
 
 @media (max-width: 480px) {
@@ -763,5 +798,10 @@
     padding: 10px 14px;
     min-height: 40px;
     font-size: 0.9rem;
+  }
+  .modal-contenido::before,
+  .producto-modal-contenido::before {
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
   }
 }
