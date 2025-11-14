@@ -24,14 +24,12 @@ const total = document.getElementById("total");
 const btnVerCarrito = document.getElementById("verCarrito");
 const cerrarCarritoBtn = document.getElementById("cerrar-carrito");
 const btnFinalizarCompra = document.getElementById("finalizarCompra");
-const cerrarCarritoBtn2 = document.getElementById("cerrarCarrito"); // Botón cerrar adicional
+const cerrarCarritoBtn2 = document.getElementById("cerrarCarrito");
 
 const clienteNombreInput = document.getElementById("cliente-nombre");
 const direccionWrapper = document.getElementById("direccion-wrapper");
 const clienteDireccion = document.getElementById("cliente-direccion");
 
-
-// Nuevas variables para personalización y cantidad
 const btnPersonalizarMedida = document.getElementById("btn-personalizar-medida");
 const btnConfirmarMedida = document.getElementById("btn-confirmar-medida");
 const personalizadoMedidaWrapper = document.getElementById("personalizado-medida-wrapper");
@@ -53,7 +51,6 @@ const sobreNosotrosContainer = document.getElementById("sobre-nosotros-container
 const btnSobreNosotros = document.querySelectorAll(".btn-nosotros");
 const btnVolverInicio = document.getElementById("btn-volver-inicio");
 
-// Variables para personalización en carrito
 const modalPersonalizacionItem = document.getElementById("modal-personalizacion-item");
 const textoPersonalizacion = document.getElementById("texto-personalizacion");
 const checkboxDisenoPersonalizado = document.getElementById("checkbox-diseno-personalizado");
@@ -78,6 +75,15 @@ let seleccion = {
 // Número de WhatsApp
 const telefonoWhats = "5493547656901";
 
+// Configuración de carruseles para categorías
+const carruselesConfig = {
+    "Gigantografias": ["img/gigantostitch.jpg", "img/oktober.jpg"],
+    "Carteleria": ["img/cartel.jpg", "img/carteljuguetes.jpg", "img/polyfan.jpg"],
+    "HomeDeco": ["img/decoportada.jpg", "img/decobart.jpg", "img/decogoku.jpg", "img/decoperchero.jpg"]
+};
+
+let carruselesActivos = {};
+
 // Cargar stock.json
 async function cargarStock() {
     categoriasContainer.innerHTML = '<div class="cargando">Cargando categorías...</div>';
@@ -88,7 +94,6 @@ async function cargarStock() {
         console.log("Datos cargados:", data);
     } catch (e) {
         console.error("Error cargando stock.json, usando fallback demo", e);
-        // Usar datos de ejemplo si falla
         data = {
             categorias: [
                 { 
@@ -161,7 +166,6 @@ async function cargarStock() {
         };
     }
     
-    // Inicializar stockMap
     if (data.categorias) {
         data.categorias.forEach(cat => {
             cat.productos = cat.productos || [];
@@ -170,7 +174,7 @@ async function cargarStock() {
             });
         });
     }
-    // Normalizar claves de productos para compatibilidad
+    
     if (data.categorias) {
         data.categorias.forEach(cat => {
             cat.productos.forEach(p => {
@@ -180,9 +184,56 @@ async function cargarStock() {
             });
         });
     }
-    
 
     mostrarCategorias();
+}
+
+// Función para iniciar carrusel de una categoría
+function iniciarCarruselCategoria(categoriaId, imgElement) {
+    const imagenes = carruselesConfig[categoriaId];
+    if (!imagenes || imagenes.length === 0) return;
+    
+    let indiceActual = 0;
+    
+    // Crear segunda imagen para crossfade CON TODAS LAS CLASES
+    const imgElement2 = imgElement.cloneNode(true);
+    imgElement2.className = imgElement.className; // Copiar clases
+    imgElement2.style.opacity = "0";
+    imgElement2.style.zIndex = "1";
+    imgElement.parentElement.appendChild(imgElement2);
+    imgElement.style.zIndex = "2";
+    
+    // Establecer primera imagen
+    imgElement.src = imagenes[0];
+    imgElement.style.opacity = "1";
+    
+    let imagenActiva = imgElement;
+    let imagenInactiva = imgElement2;
+    
+    // Crear intervalo para cambiar imágenes con crossfade
+    const intervalo = setInterval(() => {
+        indiceActual = (indiceActual + 1) % imagenes.length;
+        
+        // Precargar en la imagen inactiva
+        imagenInactiva.src = imagenes[indiceActual];
+        
+        // Hacer crossfade
+        imagenActiva.style.opacity = "0";
+        imagenInactiva.style.opacity = "1";
+        
+        // Intercambiar referencias
+        [imagenActiva, imagenInactiva] = [imagenInactiva, imagenActiva];
+    }, 3000);
+    
+    carruselesActivos[categoriaId] = intervalo;
+}
+
+// Función para detener todos los carruseles
+function detenerCarruseles() {
+    Object.values(carruselesActivos).forEach(intervalo => {
+        clearInterval(intervalo);
+    });
+    carruselesActivos = {};
 }
 
 // Mostrar tarjetas de categorías
@@ -190,25 +241,76 @@ function mostrarCategorias() {
     categoriasContainer.innerHTML = "";
     const cats = data.categorias || [];
     
+    // Detener carruseles anteriores
+    detenerCarruseles();
+    
     cats.forEach(cat => {
         const div = document.createElement("div");
         div.className = "categoria";
-        const img = cat.imagen && cat.imagen.trim() ? cat.imagen : "img/personalizado.jpg";
-        div.innerHTML = `
-            <img src="${img}" alt="${cat.nombre || cat.id}" onerror="this.onerror=null;this.src='img/personalizado.jpg'"/>
-            <h3>${cat.nombre || cat.id}</h3>
-        `;
+        
+        // Agregar clases especiales para cada categoría - NORMALIZADO A LOWERCASE
+        const catIdLower = cat.id.toLowerCase();
+        if (catIdLower === "gigantografias") {
+            div.classList.add("categoria-gigantografias");
+        } else if (catIdLower === "carteleria") {
+            div.classList.add("categoria-carteleria");
+        } else if (catIdLower === "homedeco") {
+            div.classList.add("categoria-homedeco");
+        }
+        
+        // Verificar si tiene carrusel configurado
+        const tieneCarrusel = carruselesConfig[cat.id];
+        const img = tieneCarrusel 
+            ? carruselesConfig[cat.id][0] 
+            : (cat.imagen && cat.imagen.trim() ? cat.imagen : "img/personalizado.jpg");
+        
+        // Crear wrapper para la imagen
+        const imgWrapper = document.createElement("div");
+        imgWrapper.className = "imagen-wrapper";
+        
+        const imgElement = document.createElement("img");
+        imgElement.src = img;
+        imgElement.alt = cat.nombre || cat.id;
+        imgElement.className = tieneCarrusel ? "categoria-img-carrusel" : "";
+        imgElement.onerror = function() {
+            this.onerror = null;
+            this.src = 'img/personalizado.jpg';
+        };
+        
+        const h3 = document.createElement("h3");
+        h3.textContent = cat.nombre || cat.id;
+        
+        imgWrapper.appendChild(imgElement);
+        div.appendChild(imgWrapper);
+        div.appendChild(h3);
+        
         div.addEventListener("click", () => mostrarProductosCategoria(cat.id));
         categoriasContainer.appendChild(div);
+        
+        // Iniciar carrusel si aplica
+        if (tieneCarrusel) {
+            iniciarCarruselCategoria(cat.id, imgElement);
+        }
     });
 
     // Personalizado
     const personalizado = document.createElement("div");
-    personalizado.className = "categoria";
-    personalizado.innerHTML = `
-        <img src="img/personalizado.jpg" alt="Personalizado"/>
-        <h3>Quiero un diseño personalizado</h3>
-    `;
+    personalizado.className = "categoria categoria-personalizado";
+    
+    const imgWrapperPers = document.createElement("div");
+    imgWrapperPers.className = "imagen-wrapper";
+    
+    const imgPers = document.createElement("img");
+    imgPers.src = "img/personalizado.jpg";
+    imgPers.alt = "Personalizado";
+    
+    const h3Pers = document.createElement("h3");
+    h3Pers.textContent = "Quiero un diseño personalizado";
+    
+    imgWrapperPers.appendChild(imgPers);
+    personalizado.appendChild(imgWrapperPers);
+    personalizado.appendChild(h3Pers);
+    
     personalizado.addEventListener("click", () => {
         const texto = encodeURIComponent("¡Hola! Quiero hacer mi propia gigantografía personalizada / diseño personalizado. ¿Podrían ayudarme?");
         window.open(`https://wa.me/${telefonoWhats}?text=${texto}`, "_blank");
@@ -221,21 +323,24 @@ function mostrarProductosCategoria(categoriaId) {
     const cat = data.categorias.find(c => c.id === categoriaId);
     if (!cat) return;
 
+    // Detener carruseles al salir de categorías
+    detenerCarruseles();
+
     categoriasContainer.classList.add("oculto");
     productosContainer.classList.remove("oculto");
     productosContainer.innerHTML = "";
 
-    // Botón volver
     const volver = document.createElement("div");
     volver.className = "producto volver-btn";
     volver.innerHTML = `<h3>Volver a categorías</h3>`;
     volver.addEventListener("click", () => {
         productosContainer.classList.add("oculto");
         categoriasContainer.classList.remove("oculto");
+        // Reiniciar carruseles al volver
+        mostrarCategorias();
     });
     productosContainer.appendChild(volver);
 
-    // Productos de la categoría
     const productos = cat.productos || [];
     productos.forEach(prod => {
         const div = document.createElement("div");
@@ -244,10 +349,8 @@ function mostrarProductosCategoria(categoriaId) {
         const tieneStock = (stockMap[prod.id] || 0) > 0;
         const esProximamente = prod.proximamente === true;
         
-        // MODIFICADO: Manejo de productos próximamente
         const precioTexto = esProximamente ? "" : precioBase(prod);
         
-        // NUEVO: Agregar etiqueta de tiempo de entrega
         let etiquetaEntregaHTML = "";
         if (prod.tiempo_entrega) {
             const esInmediata = prod.tiempo_entrega.toLowerCase().includes("inmediata");
@@ -267,14 +370,12 @@ function mostrarProductosCategoria(categoriaId) {
             ${!esProximamente ? '<button class="btn-ver">Ver</button>' : ''}
         `;
         
-        // Solo agregar evento click si NO es próximo
         if (!esProximamente) {
             div.querySelector(".btn-ver").addEventListener("click", () => abrirModalProducto(cat.id, prod.id));
         }
         productosContainer.appendChild(div);
     });
 
-    // Tarjeta personalizado dentro de categoría
     const pers = document.createElement("div");
     pers.className = "producto";
     pers.innerHTML = `
@@ -293,13 +394,10 @@ function mostrarProductosCategoria(categoriaId) {
 }
 
 function precioBase(prod) {
-    // Si tiene array de precios, mostrar el mínimo o "Desde $"
     if (prod.precios && prod.precios.length > 0) {
-        // Si es array de strings (contiene "A consultar")
         if (typeof prod.precios[0] === 'string') {
             return "Precio a consultar";
         }
-        // Si es array de números, mostrar el precio mínimo
         const preciosNumericos = prod.precios.filter(p => typeof p === 'number');
         if (preciosNumericos.length > 0) {
             const minPrecio = Math.min(...preciosNumericos);
@@ -308,7 +406,6 @@ function precioBase(prod) {
         return "Precio a consultar";
     }
     
-    // Para compatibilidad con datos antiguos que usan precio simple
     if (typeof prod.precio === 'string') {
         if (prod.precio.toLowerCase().includes('consultar')) {
             return "Precio a consultar";
@@ -339,7 +436,6 @@ function abrirModalProducto(categoriaId, productoId) {
         colorPersonalizado: null
     };
 
-    // ============ RESET PERSONALIZACIONES Y CANTIDAD ============
     personalizadoMedidaWrapper.style.display = "none";
     personalizadoColorWrapper.style.display = "none";
     confirmacionMedida.style.display = "none";
@@ -349,24 +445,19 @@ function abrirModalProducto(categoriaId, productoId) {
     btnPersonalizarMedida.style.display = "block";
     btnPersonalizarColor.style.display = "block";
     inputCantidad.value = 1;
-    // ============ FIN RESET ============
 
     detalleNombre.textContent = productoActual.nombre;
     detalleDescripcion.textContent = productoActual.descripcion || "";
     detalleImg.src = productoActual.imagen || "img/personalizado.jpg";
 
-    // Resetear inputs personalizados
     medidaPersonalizadaInput.value = "";
     document.getElementById("color-personalizado").value = "";
 
-    // ============ MEDIDAS ============
     opcionesMedidas.innerHTML = "";
     if (productoActual.medidas && productoActual.medidas.length) {
         productoActual.medidas.forEach((m, idx) => {
             const btn = document.createElement("button");
             btn.className = "chip";
-            
-            // MODIFICADO: Solo mostrar la medida, no el precio
             btn.textContent = m;
             
             btn.addEventListener("click", () => {
@@ -375,7 +466,6 @@ function abrirModalProducto(categoriaId, productoId) {
                 seleccion.medida = m;
                 seleccion.medidaPersonalizada = null;
                 
-                // Actualizar precio según la medida seleccionada
                 if (productoActual.precios && productoActual.precios[idx] !== undefined) {
                     productoActual.precioSeleccionado = productoActual.precios[idx];
                 }
@@ -389,14 +479,12 @@ function abrirModalProducto(categoriaId, productoId) {
     } else {
         opcionesMedidas.innerHTML = "<em>Único</em>";
         seleccion.medida = "Único";
-        // Para productos con una sola medida
         if (productoActual.precios && productoActual.precios[0] !== undefined) {
             productoActual.precioSeleccionado = productoActual.precios[0];
         }
         actualizarPrecio();
     }
 
-    // ============ COLORES ============
     opcionesColores.innerHTML = "";
     if (productoActual.color && productoActual.color.length) {
         opcionColorWrapper.style.display = "block";
@@ -418,7 +506,6 @@ function abrirModalProducto(categoriaId, productoId) {
         seleccion.color = null;
     }
 
-    // ============ MATERIALES ============
     opcionesMaterial.innerHTML = "";
     if (productoActual.material && productoActual.material.length) {
         opcionMaterialWrapper.style.display = "block";
@@ -440,7 +527,6 @@ function abrirModalProducto(categoriaId, productoId) {
         seleccion.material = null;
     }
 
-    // ============ ACABADO ============
     opcionesAcabado.innerHTML = "";
     if (productoActual.acabado && productoActual.acabado.length) {
         opcionAcabadoWrapper.style.display = "block";
@@ -462,10 +548,8 @@ function abrirModalProducto(categoriaId, productoId) {
         seleccion.acabado = null;
     }
 
-    // ============ TERMINACIÓN ============
     opcionesTerminacion.innerHTML = "";
     
-    // Para MUEBLES (Home Deco) que tengan ploteadoOMaderaLisa
     if (productoActual.ploteadoOMaderaLisa && productoActual.ploteadoOMaderaLisa.length) {
         opcionTerminacionWrapper.style.display = "block";
         productoActual.ploteadoOMaderaLisa.forEach((term, idx) => {
@@ -482,7 +566,6 @@ function abrirModalProducto(categoriaId, productoId) {
             if (idx === 0) chip.click();
         });
     } 
-    // Para GIGANTOGRAFÍAS (siempre Ploteado)
     else if (productoActual.ploteado === true) {
         opcionTerminacionWrapper.style.display = "block";
         opcionesTerminacion.innerHTML = "<em>Ploteado (incluido)</em>";
@@ -497,9 +580,7 @@ function abrirModalProducto(categoriaId, productoId) {
     productoModal.classList.remove("oculto");
 }
 
-// Inicializar event listeners para personalización y cantidad
 function inicializarEventListenersModal() {
-  // Personalización de medida
   btnPersonalizarMedida.addEventListener("click", () => {
     personalizadoMedidaWrapper.style.display = "block";
     opcionesMedidas.style.display = "none";
@@ -516,7 +597,6 @@ function inicializarEventListenersModal() {
     }
   });
 
-  // Personalización de color
   btnPersonalizarColor.addEventListener("click", () => {
     personalizadoColorWrapper.style.display = "block";
     opcionesColores.style.display = "none";
@@ -533,7 +613,6 @@ function inicializarEventListenersModal() {
     }
   });
 
-  // Control de cantidad
   btnRestar.addEventListener("click", () => {
     let current = parseInt(inputCantidad.value);
     if (current > 1) {
@@ -554,39 +633,34 @@ function inicializarEventListenersModal() {
     if (value > 99) e.target.value = 99;
   });
 
-  // ============ NAVEGACIÓN A SOBRE NOSOTROS - CORREGIDO ============
   if (btnSobreNosotros.length > 0) {
     btnSobreNosotros.forEach(boton => {
       boton.addEventListener("click", () => {
         if (sobreNosotrosContainer.classList.contains("oculto")) {
-          // Ir a Sobre Nosotros
+          detenerCarruseles();
           categoriasContainer.classList.add("oculto");
           productosContainer.classList.add("oculto");
           sobreNosotrosContainer.classList.remove("oculto");
-          // Cambiar texto de todos los botones
           btnSobreNosotros.forEach(btn => btn.textContent = "Volver");
         } else {
-          // Volver al inicio desde Sobre Nosotros
           sobreNosotrosContainer.classList.add("oculto");
           categoriasContainer.classList.remove("oculto");
-          // Restaurar texto original
+          mostrarCategorias();
           btnSobreNosotros.forEach(btn => btn.textContent = "Sobre Nosotros");
         }
       });
     });
   }
 
-  // Volver desde Sobre Nosotros (botón dentro de la página)
   if (btnVolverInicio) {
     btnVolverInicio.addEventListener("click", () => {
       sobreNosotrosContainer.classList.add("oculto");
       categoriasContainer.classList.remove("oculto");
-      // Restaurar texto de los botones en header y footer
+      mostrarCategorias();
       btnSobreNosotros.forEach(btn => btn.textContent = "Sobre Nosotros");
     });
   }
 
-  // Cerrar carrito
   if (cerrarCarritoBtn) {
     cerrarCarritoBtn.addEventListener("click", () => {
       carritoModal.classList.add("oculto");
@@ -598,7 +672,6 @@ function inicializarEventListenersModal() {
     });
   }
 
-  // Cerrar modal de producto
   if (cerrarProducto) {
     cerrarProducto.addEventListener("click", () => {
       productoModal.classList.add("oculto");
@@ -606,18 +679,14 @@ function inicializarEventListenersModal() {
   }
 }
 
-
-// Actualizar precio
 function actualizarPrecio() {
     if (!productoActual) return;
 
-    // Si hay medida personalizada, mostrar "Precio a consultar"
     if (seleccion.medidaPersonalizada) {
         detallePrecio.innerHTML = `<strong>Precio a consultar</strong>`;
         return;
     }
 
-    // Usar precioSeleccionado si está disponible
     if (productoActual.precioSeleccionado !== undefined) {
         if (typeof productoActual.precioSeleccionado === 'string') {
             if (productoActual.precioSeleccionado.toLowerCase().includes('consultar')) {
@@ -634,7 +703,6 @@ function actualizarPrecio() {
         return;
     }
 
-    // Fallback para datos antiguos
     if (typeof productoActual.precio === 'string') {
         if (productoActual.precio.toLowerCase().includes('consultar')) {
             detallePrecio.innerHTML = `<strong>Precio a consultar</strong>`;
@@ -662,7 +730,6 @@ medidaPersonalizadaInput.addEventListener("input", (e) => {
     actualizarPrecio();
 });
 
-// Agregar al carrito
 btnAgregarCarrito.addEventListener("click", () => {
     if (!productoActual) return;
 
@@ -693,21 +760,17 @@ btnAgregarCarrito.addEventListener("click", () => {
 function calcularPrecioUnitario() {
     if (!productoActual) return 0;
     
-    // Si hay medida personalizada, precio = 0 (a consultar)
     if (seleccion.medidaPersonalizada) return 0;
     
-    // Usar precioSeleccionado si está disponible
     if (productoActual.precioSeleccionado !== undefined) {
         if (typeof productoActual.precioSeleccionado === 'string') return 0;
         return productoActual.precioSeleccionado || 0;
     }
     
-    // Fallback para datos antiguos
     if (typeof productoActual.precio === 'string') return 0;
     return productoActual.precio || 0;
 }
 
-// Cerrar modal producto
 btnCancelar.addEventListener("click", () => productoModal.classList.add("oculto"));
 if (cerrarProducto) {
   cerrarProducto.addEventListener("click", () => productoModal.classList.add("oculto"));
@@ -716,7 +779,6 @@ productoModal.addEventListener("click", e => {
     if (e.target === productoModal) productoModal.classList.add("oculto"); 
 });
 
-// Notificaciones
 function mostrarNotificacion(mensaje, tipo = "success") {
     const notification = document.createElement("div");
     notification.style.cssText = `
@@ -729,13 +791,11 @@ function mostrarNotificacion(mensaje, tipo = "success") {
     setTimeout(() => notification.remove(), 2400);
 }
 
-// Mostrar carrito
 btnVerCarrito.addEventListener("click", () => {
     carritoModal.classList.remove("oculto");
     mostrarCarrito();
 });
 
-// Mostrar lista del carrito
 function mostrarCarrito() {
     listaCarrito.innerHTML = "";
     let suma = 0;
@@ -754,8 +814,7 @@ function mostrarCarrito() {
 
             const li = document.createElement("li");
             
-            // FORMATO DEL PRECIO: Solo $ si es numérico
-            const precioTexto = esConsultar ? 'Precio a consultar' : `$${precio.toLocaleString('es-AR')}`;
+            const precioTexto = esConsultar ? 'Precio a consultar' : `${precio.toLocaleString('es-AR')}`;
             
             li.innerHTML = `
                 <div class="item-carrito">
@@ -784,8 +843,7 @@ function mostrarCarrito() {
             listaCarrito.appendChild(li);
         });
 
-        // Total también con formato
-        total.textContent = `Total: $${suma.toLocaleString('es-AR')}`;
+        total.textContent = `Total: ${suma.toLocaleString('es-AR')}`;
 
         listaCarrito.querySelectorAll(".btn-eliminar").forEach(btn => {
             btn.addEventListener("click", (e) => {
@@ -804,12 +862,10 @@ function mostrarCarrito() {
     }
 }
 
-// Opciones envío
 document.querySelectorAll('input[name="entrega"]').forEach(r => {
     r.addEventListener("change", (e) => {
         if (e.target.value === "envio") {
             direccionWrapper.style.display = "block";
-            // Agregar mensaje de consulta si no existe
             if (!document.querySelector('.mensaje-consulta-envio')) {
                 const mensajeEnvio = document.createElement('p');
                 mensajeEnvio.className = 'mensaje-consulta-envio';
@@ -823,7 +879,6 @@ document.querySelectorAll('input[name="entrega"]').forEach(r => {
 });
 
 function inicializarEventosCarrito() {
-    // Cerrar modal carrito
     if (cerrarCarritoBtn) {
         cerrarCarritoBtn.addEventListener("click", () => carritoModal.classList.add("oculto"));
     }
@@ -831,18 +886,15 @@ function inicializarEventosCarrito() {
         cerrarCarritoBtn2.addEventListener("click", () => carritoModal.classList.add("oculto"));
     }
     
-    // Finalizar compra
     if (btnFinalizarCompra) {
         btnFinalizarCompra.addEventListener("click", finalizarCompra);
     }
     
-    // Cerrar modal al hacer click fuera
     carritoModal.addEventListener("click", e => { 
         if (e.target === carritoModal) carritoModal.classList.add("oculto"); 
     });
 }
 
-// Función finalizar compra - NUEVA
 function finalizarCompra() {
     if (!carrito.length) {
         mostrarNotificacion("Tu carrito está vacío.", "error");
@@ -853,7 +905,6 @@ function finalizarCompra() {
     const entrega = document.querySelector('input[name="entrega"]:checked').value;
     const direccion = clienteDireccion.value.trim();
     
-    // Obtener medio de pago
     const medioPago = document.querySelector('input[name="medio-pago"]:checked').value;
     let medioPagoTexto = "";
     
@@ -882,7 +933,6 @@ function finalizarCompra() {
         if (it.acabado !== "N/A") linea += ` - Acabado: ${it.acabado}`;
         if (it.terminacion !== "N/A") linea += ` - Terminación: ${it.terminacion}`;
         
-        // Agregar personalización
         if (it.personalizacionTexto) {
             linea += ` - Personalización: ${it.personalizacionTexto}`;
         }
@@ -892,7 +942,7 @@ function finalizarCompra() {
         
         const precioItem = (it.medidaPersonalizada || it.precioUnitario === 0) 
             ? "Precio a consultar" 
-            : `$${(it.precioUnitario * it.cantidad).toLocaleString('es-AR')}`;
+            : `${(it.precioUnitario * it.cantidad).toLocaleString('es-AR')}`;
         
         linea += ` - Precio: ${precioItem}`;
         return linea;
@@ -910,7 +960,7 @@ function finalizarCompra() {
         `Hola *Colorcopy*!\n\n` +
         `Quiero realizar el siguiente pedido:\n\n` +
         `${itemsTexto}\n\n` +
-        `*Total estimado*: $${totalCompra.toLocaleString('es-AR')}\n\n` +
+        `*Total estimado*: ${totalCompra.toLocaleString('es-AR')}\n\n` +
         `*Nombre*: ${nombreCliente}\n` +
         `*Medio de Pago*: ${medioPagoTexto}\n` +
         `*Entrega*: ${entregaTexto}\n\n` +
@@ -922,7 +972,6 @@ function finalizarCompra() {
 
 btnFinalizarCompra.addEventListener("click", finalizarCompra);
 
-// Función para abrir modal de personalización de item
 function abrirPersonalizacionItem(idx) {
     itemPersonalizandoIndex = idx;
     const item = carrito[idx];
@@ -933,7 +982,6 @@ function abrirPersonalizacionItem(idx) {
     modalPersonalizacionItem.classList.remove("oculto");
 }
 
-// Guardar personalización
 btnGuardarPersonalizacion.addEventListener("click", () => {
     if (itemPersonalizandoIndex === null) return;
     
@@ -948,42 +996,35 @@ btnGuardarPersonalizacion.addEventListener("click", () => {
     mostrarCarrito();
 });
 
-// Cancelar personalización
 btnCancelarPersonalizacion.addEventListener("click", () => {
     modalPersonalizacionItem.classList.add("oculto");
 });
 
-// Cerrar modal al hacer click fuera
 modalPersonalizacionItem.addEventListener("click", (e) => {
     if (e.target === modalPersonalizacionItem) {
         modalPersonalizacionItem.classList.add("oculto");
     }
 });
 
-// Event listeners para medio de pago - VERSIÓN CORREGIDA
 function inicializarMedioPago() {
     const infoTransferencia = document.getElementById("info-transferencia");
     const bancosCreditoWrapper = document.getElementById("bancos-credito-wrapper");
     
-    // Verificar que los elementos existen
     if (!bancosCreditoWrapper) {
         console.error("No se encontró el elemento bancos-credito-wrapper");
         return;
     }
     
-    // Función para manejar el cambio
     function manejarCambioMedioPago() {
         const medioPagoSeleccionado = document.querySelector('input[name="medio-pago"]:checked');
         
         if (!medioPagoSeleccionado) return;
         
-        // Ocultar todos los mensajes primero
         if (infoTransferencia) {
             infoTransferencia.style.display = "none";
         }
         bancosCreditoWrapper.style.display = "none";
         
-        // Mostrar según selección
         if (medioPagoSeleccionado.value === "transferencia" && infoTransferencia) {
             infoTransferencia.style.display = "block";
         } else if (medioPagoSeleccionado.value === "credito") {
@@ -991,22 +1032,17 @@ function inicializarMedioPago() {
         }
     }
     
-    // Agregar event listeners a todos los radios
     document.querySelectorAll('input[name="medio-pago"]').forEach(radio => {
         radio.addEventListener("change", manejarCambioMedioPago);
     });
     
-    // Ejecutar una vez al inicializar para establecer estado correcto
     manejarCambioMedioPago();
 }
 
-
-// =================== CARRUSEL DE VIDEOS AUTOMÁTICO ===================
 const videoPlayer = document.getElementById("videoPlayer");
 const prevVideoBtn = document.getElementById("prevVideo");
 const nextVideoBtn = document.getElementById("nextVideo");
 
-// Agregar rutas de videos locales
 const videos = [
   "videos/video1.mp4",
   "videos/video2.mp4", 
@@ -1021,7 +1057,6 @@ let autoPlayTimeout;
 function cargarVideo(index) {
   if (!videoPlayer || videos.length === 0) return;
   
-  // Limpiar timeout anterior
   if (autoPlayTimeout) {
     clearTimeout(autoPlayTimeout);
   }
@@ -1032,29 +1067,24 @@ function cargarVideo(index) {
   currentVideo = index;
   videoPlayer.src = videos[currentVideo];
   
-  // Asegurar que los atributos para reproducción en línea estén configurados
   videoPlayer.setAttribute('playsinline', '');
   videoPlayer.setAttribute('webkit-playsinline', '');
   
   videoPlayer.load();
   
-  // Configurar video sin sonido
   videoPlayer.muted = true;
   videoPlayer.volume = 0;
   
-  // Actualizar contador
   const counter = document.querySelector('.video-counter');
   if (counter) {
     counter.textContent = `${currentVideo + 1} / ${videos.length}`;
   }
   
-  // Reiniciar barra de progreso
   const progressBar = document.querySelector('.video-progress-bar');
   if (progressBar) {
     progressBar.style.width = '0%';
   }
   
-  // Iniciar animación de progreso
   let progress = 0;
   const progressInterval = setInterval(() => {
     progress += 1;
@@ -1064,27 +1094,22 @@ function cargarVideo(index) {
     if (progress >= 100) {
       clearInterval(progressInterval);
     }
-  }, 50); // 5 segundos = 5000ms, 100% en 5000ms = 1% cada 50ms
+  }, 50);
   
-  // Intentar reproducir automáticamente
   videoPlayer.play().catch(() => {
     console.log("Autoplay bloqueado, el usuario debe iniciar manualmente");
   });
   
-  // Configurar cambio automático después de 5 segundos
   autoPlayTimeout = setTimeout(() => {
     clearInterval(progressInterval);
     cargarVideo(currentVideo + 1);
   }, 5000);
 }
 
-
-// Event listener para cuando el video termine naturalmente
 videoPlayer.addEventListener('ended', () => {
   cargarVideo(currentVideo + 1);
 });
 
-// Inicializar carrusel de videos
 function inicializarCarruselVideos() {
   if (videoPlayer && videos.length > 0) {
     cargarVideo(0);
@@ -1103,9 +1128,6 @@ function inicializarCarruselVideos() {
   }
 }
 
-
-
-// En el DOMContentLoaded, agregar inicializarCarruselVideos:
 document.addEventListener("DOMContentLoaded", () => {
     cargarStock();
     inicializarEventListenersModal();

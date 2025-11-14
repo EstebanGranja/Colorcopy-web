@@ -17,13 +17,83 @@
   cursor: pointer;
   transition: transform .2s ease;
   border: 1px solid var(--gris-medio);
+  overflow: hidden;
+  position: relative;
+}
+
+.categoria .imagen-wrapper {
+  width: 100%;
+  height: 160px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
 }
 
 .categoria img {
-  width: 100%;
+  width: 110%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  border-radius: 8px;
+  border: 1px solid #000;
+  transition: opacity 0.3s ease-in-out;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Mantener centrado para Gigantografías */
+.categoria-gigantografias img {
+  object-position: center center !important;
+}
+
+/* Ajuste manual de posición vertical para Cartelería */
+.categoria-carteleria img {
+  object-position: center 40% !important;
+}
+
+/* Ajuste manual de posición vertical para Home Deco */
+.categoria-homedeco img {
+  object-position: center 40% !important;
+}
+
+/* Mantener centrado y sin efectos para categoría Personalizado */
+.categoria-personalizado .imagen-wrapper {
+  overflow: visible;
+}
+
+.categoria-personalizado img {
+  width: 100% !important;
   height: 160px;
   object-fit: cover;
+  object-position: center center !important;
+  position: static !important;
+  border: 1px solid #000;
   border-radius: 8px;
+}
+
+/* Estilos para imágenes del carrusel de categorías */
+.categoria-img-carrusel {
+  animation: panZoomCarrusel 10s ease-in-out infinite alternate;
+  filter: brightness(0.92) contrast(1.05) saturate(1.1);
+}
+
+@keyframes panZoomCarrusel {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-9%);
+  }
+}
+
+/* Clases para efecto fade */
+.carrusel-fade-out {
+  opacity: 0 !important;
+}
+
+.carrusel-fade-in {
+  opacity: 1 !important;
 }
 
 .categoria h3 {
