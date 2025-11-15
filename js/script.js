@@ -806,6 +806,9 @@ function mostrarCarrito() {
         li.style.textAlign = "center";
         li.style.padding = "20px";
         listaCarrito.appendChild(li);
+        
+        // Mostrar $0 cuando el carrito está vacío
+        total.textContent = `Total: $0`;
     } else {
         carrito.forEach((it, idx) => {
             const esConsultar = it.medidaPersonalizada || it.precioUnitario === 0;
@@ -814,7 +817,7 @@ function mostrarCarrito() {
 
             const li = document.createElement("li");
             
-            const precioTexto = esConsultar ? 'Precio a consultar' : `${precio.toLocaleString('es-AR')}`;
+            const precioTexto = esConsultar ? 'Precio a consultar' : `$${precio.toLocaleString('es-AR')}`;
             
             li.innerHTML = `
                 <div class="item-carrito">
@@ -843,7 +846,8 @@ function mostrarCarrito() {
             listaCarrito.appendChild(li);
         });
 
-        total.textContent = `Total: ${suma.toLocaleString('es-AR')}`;
+        // Mostrar total con formato correcto
+        total.textContent = `Total: $${suma.toLocaleString('es-AR')}`;
 
         listaCarrito.querySelectorAll(".btn-eliminar").forEach(btn => {
             btn.addEventListener("click", (e) => {
