@@ -85,11 +85,11 @@
         <div class="sobre-nosotros-video">
           <h2>Conocé nuestro proceso</h2>
           <div class="video-carousel">
-            <button class="video-btn prev" id="prevVideo">❮</button>
+            <button class="video-btn prev" id="prevVideo">◀</button>
             <video id="videoPlayer" muted playsinline webkit-playsinline>
               Tu navegador no soporta videos HTML5.
             </video>
-            <button class="video-btn next" id="nextVideo">❯</button>
+            <button class="video-btn next" id="nextVideo">▶</button>
             
             <!-- Elementos de progreso y contador -->
             <div class="video-progress">
@@ -222,8 +222,6 @@
       <p id="total"></p>
       
       <div class="carrito-form">
-        <input type="text" id="cliente-nombre" placeholder="Ingrese su nombre" />
-        
         <!-- SECCIÓN MEDIO DE PAGO -->
         <div class="medio-pago-section">
           <label>Medio de Pago</label>
@@ -246,14 +244,59 @@
           </div>
         </div>
         
+        <!-- INPUT NOMBRE -->
+        <div class="input-carrito-wrapper">
+          <label>Nombre</label>
+          <div class="input-personalizado">
+            <input type="text" id="cliente-nombre" class="input-carrito" placeholder="Ingrese su nombre" />
+            <button class="btn-confirmar" id="btn-confirmar-nombre">✓</button>
+          </div>
+          <div class="confirmacion-mensaje" id="confirmacion-nombre" style="display:none;">
+            ✓ Se ha registrado su respuesta
+          </div>
+        </div>
+
         <div class="envio-opciones">
           <label><input type="radio" name="entrega" value="retiro" checked /> Retira</label>
           <label><input type="radio" name="entrega" value="envio" /> Envío</label>
         </div>
-        
+
+        <!-- INPUT DIRECCIÓN -->
         <div id="direccion-wrapper" style="display:none;">
           <label>Dirección</label>
-          <input type="text" id="cliente-direccion" placeholder="Calle, número, ciudad" />
+          <div class="input-personalizado">
+            <input type="text" id="cliente-direccion" class="input-carrito" placeholder="Calle, número, ciudad" />
+            <button class="btn-confirmar" id="btn-confirmar-direccion">✓</button>
+          </div>
+          <div class="confirmacion-mensaje" id="confirmacion-direccion" style="display:none;">
+            ✓ Se ha registrado su respuesta
+          </div>
+          
+          <select id="provincia-select">
+            <option value="Buenos Aires">Buenos Aires</option>
+            <option value="Catamarca">Catamarca</option>
+            <option value="Chaco">Chaco</option>
+            <option value="Chubut">Chubut</option>
+            <option value="Córdoba" selected>Córdoba</option>
+            <option value="Corrientes">Corrientes</option>
+            <option value="Entre Ríos">Entre Ríos</option>
+            <option value="Formosa">Formosa</option>
+            <option value="Jujuy">Jujuy</option>
+            <option value="La Pampa">La Pampa</option>
+            <option value="La Rioja">La Rioja</option>
+            <option value="Mendoza">Mendoza</option>
+            <option value="Misiones">Misiones</option>
+            <option value="Neuquén">Neuquén</option>
+            <option value="Río Negro">Río Negro</option>
+            <option value="Salta">Salta</option>
+            <option value="San Juan">San Juan</option>
+            <option value="San Luis">San Luis</option>
+            <option value="Santa Cruz">Santa Cruz</option>
+            <option value="Santa Fe">Santa Fe</option>
+            <option value="Santiago del Estero">Santiago del Estero</option>
+            <option value="Tierra del Fuego">Tierra del Fuego</option>
+            <option value="Tucumán">Tucumán</option>
+          </select>
         </div>
         
         <!-- BOTONES DEL CARRITO -->

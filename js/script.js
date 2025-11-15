@@ -29,6 +29,7 @@ const cerrarCarritoBtn2 = document.getElementById("cerrarCarrito");
 const clienteNombreInput = document.getElementById("cliente-nombre");
 const direccionWrapper = document.getElementById("direccion-wrapper");
 const clienteDireccion = document.getElementById("cliente-direccion");
+const provinciaSelect = document.getElementById("provincia-select");
 
 const btnPersonalizarMedida = document.getElementById("btn-personalizar-medida");
 const btnConfirmarMedida = document.getElementById("btn-confirmar-medida");
@@ -696,7 +697,7 @@ function actualizarPrecio() {
             }
         } else if (productoActual.precioSeleccionado > 0) {
             const precioFormateado = productoActual.precioSeleccionado.toLocaleString('es-AR');
-            detallePrecio.innerHTML = `<strong>$${precioFormateado}</strong>`;
+            detallePrecio.innerHTML = `<strong>${precioFormateado}</strong>`;
         } else {
             detallePrecio.innerHTML = `<strong>Precio a consultar</strong>`;
         }
@@ -713,7 +714,7 @@ function actualizarPrecio() {
     }
     if (productoActual.precio && productoActual.precio > 0) {
         const precioFormateado = productoActual.precio.toLocaleString('es-AR');
-        detallePrecio.innerHTML = `<strong>$${precioFormateado}</strong>`;
+        detallePrecio.innerHTML = `<strong>${precioFormateado}</strong>`;
         return;
     }
     detallePrecio.innerHTML = `<strong>Precio a consultar</strong>`;
@@ -808,7 +809,7 @@ function mostrarCarrito() {
         listaCarrito.appendChild(li);
         
         // Mostrar $0 cuando el carrito está vacío
-        total.textContent = `Total: $0`;
+        total.innerHTML = `Total: <strong>$0</strong>`;
     } else {
         carrito.forEach((it, idx) => {
             const esConsultar = it.medidaPersonalizada || it.precioUnitario === 0;
@@ -817,7 +818,7 @@ function mostrarCarrito() {
 
             const li = document.createElement("li");
             
-            const precioTexto = esConsultar ? 'Precio a consultar' : `$${precio.toLocaleString('es-AR')}`;
+            const precioTexto = esConsultar ? 'Precio a consultar' : `${precio.toLocaleString('es-AR')}`;
             
             li.innerHTML = `
                 <div class="item-carrito">
@@ -847,7 +848,7 @@ function mostrarCarrito() {
         });
 
         // Mostrar total con formato correcto
-        total.textContent = `Total: $${suma.toLocaleString('es-AR')}`;
+        total.textContent = `Total: ${suma.toLocaleString('es-AR')}`;
 
         listaCarrito.querySelectorAll(".btn-eliminar").forEach(btn => {
             btn.addEventListener("click", (e) => {
@@ -908,6 +909,7 @@ function finalizarCompra() {
     const nombreCliente = clienteNombreInput.value.trim() || "No informado";
     const entrega = document.querySelector('input[name="entrega"]:checked').value;
     const direccion = clienteDireccion.value.trim();
+    const provincia = provinciaSelect ? provinciaSelect.value : "Córdoba";
     
     const medioPago = document.querySelector('input[name="medio-pago"]:checked').value;
     let medioPagoTexto = "";
@@ -956,9 +958,12 @@ function finalizarCompra() {
         acc + (it.medidaPersonalizada || it.precioUnitario === 0 ? 0 : it.precioUnitario * it.cantidad), 0
     );
 
-    let entregaTexto = entrega === "envio" 
-        ? `Envío a: ${direccion || "Dirección no informada"}` 
-        : `Retira por local (Dr. Raúl Alfonsín 151, Alta Gracia)`;
+    let entregaTexto = "";
+    if (entrega === "envio") {
+        entregaTexto = `Envío a: ${direccion || "Dirección no informada"}, ${provincia}`;
+    } else {
+        entregaTexto = `Retira por local (Dr. Raúl Alfonsín 151, Alta Gracia, Córdoba)`;
+    }
 
     const mensaje = 
         `Hola *Colorcopy*!\n\n` +
