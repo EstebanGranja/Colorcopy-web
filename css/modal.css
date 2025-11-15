@@ -61,7 +61,7 @@
   font-size: 1.8rem;
 }
 
-/* CONTENEDORES EN BLANCO HUESO CON EFECTO METÁLICO MEJORADO */
+/* CONTENEDORES EN BLANCO HUESO CON EFECTO METÃLICO MEJORADO */
 .texto-contenedor {
   text-align: center;
   padding: 18px;
@@ -277,22 +277,12 @@
   flex: 1;
 }
 
-.opcion button, 
-.opcion .chip {
-  font-family: 'Poppins', sans-serif;
-  border-radius: 20px;
-  padding: 10px 16px;
-  border: none;
-  cursor: pointer;
-  background: rgba(10, 31, 58, 0.1);
-  color: #0a1f3a;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  font-size: 0.95rem;
-  border: 1px solid rgba(10, 31, 58, 0.2);
-}
-
-.chip {
+/* Chips de opciones - NO aplicar a input ni botón agregar medida */
+#opciones-medidas .chip,
+#opciones-colores .chip,
+#opciones-material .chip,
+#opciones-terminacion .chip,
+#opciones-acabado .chip {
   font-family: 'Poppins', sans-serif;
   border-radius: 20px;
   padding: 8px 14px;
@@ -307,61 +297,169 @@
   border: 1px solid rgba(10, 31, 58, 0.2);
 }
 
-.chip:hover {
+#opciones-medidas .chip:hover,
+#opciones-colores .chip:hover,
+#opciones-material .chip:hover,
+#opciones-terminacion .chip:hover,
+#opciones-acabado .chip:hover {
   background: rgba(10, 31, 58, 0.2);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.chip.selected {
+#opciones-medidas .chip.selected,
+#opciones-colores .chip.selected,
+#opciones-material .chip.selected,
+#opciones-terminacion .chip.selected,
+#opciones-acabado .chip.selected {
   background: linear-gradient(135deg, #0a1f3a 0%, #1a3a6a 100%) !important;
   color: white !important;
   box-shadow: 0 4px 12px rgba(10, 31, 58, 0.5) !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 
-/* INPUT PERSONALIZADO */
-.input-personalizado {
-  font-family: 'Poppins', sans-serif;
-  width: auto !important;
-  max-width: 180px;
-  min-width: 120px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: 2px solid rgba(10, 31, 58, 0.3);
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-  color: #0a1f3a;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  box-shadow: 
-    inset 0 1px 3px rgba(0, 0, 0, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.1);
-  display: inline-block;
+/* CONTENEDOR INPUT PERSONALIZADO */
+#personalizado-medida-wrapper .input-personalizado {
+  display: flex !important;
+  gap: 10px !important;
+  align-items: center !important;
+  width: 100% !important;
+  justify-content: flex-start !important;
 }
 
-.input-personalizado:focus {
-  outline: none;
-  border-color: #4dabf7;
-  background: #ffffff;
+/* INPUT DE TEXTO MEDIDA PERSONALIZADA */
+#personalizado-medida-wrapper input#medida-personalizada {
+  font-family: 'Poppins', sans-serif !important;
+  flex: 0 0 auto !important;
+  width: 50% !important;
+  max-width: 200px !important;
+  min-width: 150px !important;
+  padding: 12px 16px !important;
+  border-radius: 12px !important;
+  border: 2px solid rgba(10, 31, 58, 0.3) !important;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+  color: #0a1f3a !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
   box-shadow: 
-    inset 0 1px 3px rgba(0, 0, 0, 0.08),
-    0 0 0 3px rgba(77, 171, 247, 0.15),
-    0 4px 12px rgba(77, 171, 247, 0.2);
-  transform: translateY(-1px);
+    inset 0 2px 4px rgba(0, 0, 0, 0.06),
+    0 3px 10px rgba(0, 0, 0, 0.12) !important;
+  display: inline-block !important;
+  height: auto !important;
+  line-height: normal !important;
+  margin: 0 !important;
+  vertical-align: middle !important;
 }
 
-.input-personalizado::placeholder {
-  color: #6c757d;
-  font-weight: 400;
-  opacity: 0.7;
+#personalizado-medida-wrapper input#medida-personalizada:focus {
+  outline: none !important;
+  border-color: #4dabf7 !important;
+  background: #ffffff !important;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.06),
+    0 0 0 3px rgba(77, 171, 247, 0.2),
+    0 4px 15px rgba(77, 171, 247, 0.25) !important;
+  transform: translateY(-1px) !important;
 }
 
-.input-personalizado:hover {
-  border-color: rgba(10, 31, 58, 0.5);
+#personalizado-medida-wrapper input#medida-personalizada::placeholder {
+  color: #6c757d !important;
+  font-weight: 400 !important;
+  opacity: 0.65 !important;
+}
+
+#personalizado-medida-wrapper input#medida-personalizada:hover {
+  border-color: rgba(10, 31, 58, 0.5) !important;
   box-shadow: 
-    inset 0 1px 3px rgba(0, 0, 0, 0.08),
-    0 4px 12px rgba(0, 0, 0, 0.15);
+    inset 0 2px 4px rgba(0, 0, 0, 0.06),
+    0 4px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* BOTÓN CONFIRMAR MEDIDA (✓) - CIRCULAR */
+#personalizado-medida-wrapper button#btn-confirmar-medida.btn-confirmar,
+#personalizado-medida-wrapper button#btn-confirmar-medida {
+  font-family: 'Montserrat', sans-serif !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 50% !important;
+  border: none !important;
+  background: linear-gradient(135deg, #2f9e44 0%, #2b8a3e 100%) !important;
+  color: white !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 
+    0 4px 12px rgba(47, 158, 68, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  white-space: nowrap !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  vertical-align: middle !important;
+  line-height: 1 !important;
+}
+
+#personalizado-medida-wrapper button#btn-confirmar-medida.btn-confirmar:hover,
+#personalizado-medida-wrapper button#btn-confirmar-medida:hover {
+  background: linear-gradient(135deg, #2b8a3e 0%, #237a33 100%) !important;
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 
+    0 6px 18px rgba(47, 158, 68, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+#personalizado-medida-wrapper button#btn-confirmar-medida.btn-confirmar:active,
+#personalizado-medida-wrapper button#btn-confirmar-medida:active {
+  transform: translateY(0) scale(1) !important;
+  box-shadow: 
+    0 2px 8px rgba(47, 158, 68, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+/* BOTÓN AGREGAR MEDIDA PERSONALIZADA - VERDE */
+button#btn-agregar-medida {
+  font-family: 'Montserrat', sans-serif !important;
+  padding: 12px 20px !important;
+  border-radius: 12px !important;
+  border: none !important;
+  background: linear-gradient(135deg, #2f9e44 0%, #2b8a3e 100%) !important;
+  color: white !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 
+    0 4px 12px rgba(47, 158, 68, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  white-space: nowrap !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  height: auto !important;
+  min-height: 44px !important;
+}
+
+button#btn-agregar-medida:hover {
+  background: linear-gradient(135deg, #2b8a3e 0%, #237a33 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 
+    0 6px 18px rgba(47, 158, 68, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+button#btn-agregar-medida:active {
+  transform: translateY(0) !important;
+  box-shadow: 
+    0 2px 8px rgba(47, 158, 68, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
 .modal-actions {
@@ -387,7 +485,7 @@
   overflow: hidden;
 }
 
-/* BOTÓN AGREGAR AL CARRITO MEJORADO - ROJO MÁS FUERTE */
+/* BOTÃ"N AGREGAR AL CARRITO MEJORADO - ROJO MÃS FUERTE */
 #btn-agregar-carrito,
 .btn-gris {
   min-height: 48px !important;
@@ -469,7 +567,7 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* CONTENEDOR DE OPCIONES EN BLANCO CON EFECTO METÁLICO */
+/* CONTENEDOR DE OPCIONES EN BLANCO CON EFECTO METÃLICO */
 #opciones-container {
   display: flex;
   flex-direction: column;
@@ -487,6 +585,14 @@
     0 8px 25px rgba(0, 0, 0, 0.15) !important;
   position: relative;
   min-height: 0;
+}
+
+/* Desktop: mantener scroll */
+@media (min-width: 769px) {
+  #opciones-container {
+    overflow-y: auto;
+    max-height: calc(85vh - 280px);
+  }
 }
 
 #opciones-container::before {
@@ -519,7 +625,7 @@
   opacity: 0.7;
 }
 
-/* ACCIONES FIJAS EN BLANCO CON EFECTO METÁLICO Y PADDING CORREGIDO */
+/* ACCIONES FIJAS EN BLANCO CON EFECTO METÃLICO Y PADDING CORREGIDO */
 .acciones-fijas {
   flex-shrink: 0;
   flex-grow: 0;
@@ -582,7 +688,7 @@
   color: #0a1f3a;
 }
 
-/* Botones más compactos en acciones fijas */
+/* Botones mÃ¡s compactos en acciones fijas */
 .acciones-fijas .modal-actions {
   margin-top: 4px;
   gap: 6px;
@@ -680,6 +786,8 @@
     max-width: 100%;
     min-height: auto;
     height: auto;
+    max-height: none;
+    overflow: visible;
   }
 
   .texto-contenedor h2 {
@@ -709,8 +817,11 @@
   #opciones-container {
     max-height: none;
     overflow-y: visible;
+    overflow: visible;
     margin-bottom: 0;
     gap: 12px;
+    flex: 1 1 auto;
+    min-height: auto;
   }
 
   .acciones-fijas {
