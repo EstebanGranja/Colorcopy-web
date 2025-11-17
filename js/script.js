@@ -76,14 +76,85 @@ let seleccion = {
 // Número de WhatsApp
 const telefonoWhats = "5493547656901";
 
-// Configuración de carruseles para categorías
-const carruselesConfig = {
-    "Gigantografias": ["img/gigantostitch.jpg", "img/oktober.jpg"],
-    "Carteleria": ["img/cartel.jpg", "img/carteljuguetes.jpg", "img/polyfan.jpg"],
-    "HomeDeco": ["img/decoportada.jpg", "img/decobart.jpg", "img/decogoku.jpg", "img/decoperchero.jpg"]
+// Configuración de carruseles para productos específicos
+const carruselesProductos = {
+    17: ["img/cartelbano.jpg", "img/cartelwifi.jpg", "img/cartelwarning.jpg"]
 };
 
-let carruselesActivos = {};
+let carruselesPortadaActivos = new Map();
+
+// Función para iniciar carrusel en portada de producto
+function iniciarCarruselPortada(productoId, imgContainer) {
+    const imagenes = carruselesProductos[productoId];
+    if (!imagenes || imagenes.length === 0) return;
+    
+    const imgElement = imgContainer.querySelector('img');
+    if (!imgElement) return;
+    
+    // Crear segunda imagen para crossfade
+    const imgElement2 = imgElement.cloneNode(true);
+    imgElement2.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+    `;
+    
+    imgContainer.style.position = "relative";
+    imgContainer.style.overflow = "hidden";
+    imgElement.style.cssText = `
+        position: relative;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out, transform 4s ease-in-out;
+    `;
+    
+    imgContainer.appendChild(imgElement2);
+    
+    let indiceActual = 0;
+    let direccion = 1; // 1 = derecha a izquierda, -1 = izquierda a derecha
+    
+    // Establecer primera imagen
+    imgElement.src = imagenes[0];
+    
+    let imagenActiva = imgElement;
+    let imagenInactiva = imgElement2;
+    
+    
+    // Cambiar imagen y dirección cada 4 segundos
+    const intervalo = setInterval(() => {
+        // Cambiar dirección
+        direccion = direccion * -1;
+        
+        // Siguiente imagen
+        indiceActual = (indiceActual + 1) % imagenes.length;
+        
+        
+        // Crossfade
+        imagenActiva.style.opacity = "0";
+        imagenInactiva.style.opacity = "1";
+        
+        // Intercambiar referencias
+        [imagenActiva, imagenInactiva] = [imagenInactiva, imagenActiva];
+    }, 2000);
+    
+    carruselesPortadaActivos.set(productoId, intervalo);
+}
+
+// Función para detener carrusel de portada
+function detenerCarruselPortada(productoId) {
+    const intervalo = carruselesPortadaActivos.get(productoId);
+    if (intervalo) {
+        clearInterval(intervalo);
+        carruselesPortadaActivos.delete(productoId);
+    }
+}
 
 // Cargar stock.json
 async function cargarStock() {
@@ -110,55 +181,6 @@ async function cargarStock() {
                             tamanos: ["Pequeño", "Normal", "Grande"],
                             precios: {"Pequeño": 2500, "Normal": 3500, "Grande": 5000},
                             materiales: ["MDF", "PVC espumado"],
-                            stock: 5
-                        }
-                    ]
-                },
-                { 
-                    id: "Gigantografias", 
-                    imagen: "img/stitch.jpeg", 
-                    productos: [
-                        {
-                            id: 2,
-                            nombre: "Gigantografía Full Color",
-                            descripcion: "Impresión HD en PVC espumado o MDF.",
-                            imagen: "img/stitch.jpg",
-                            colores: ["Full Color"],
-                            tamanos: ["Pequeño", "Normal", "Grande"],
-                            precios: {"Pequeño": 7000, "Normal": 9500, "Grande": 13000},
-                            materiales: ["MDF", "PVC espumado"],
-                            stock: 4
-                        }
-                    ]
-                },
-                { 
-                    id: "Muebles", 
-                    imagen: "img/mesa.jpg", 
-                    productos: [
-                        {
-                            id: 3,
-                            nombre: "Mesa de luz personalizada",
-                            descripcion: "Material MDF o madera de pino, distintos colores.",
-                            imagen: "img/mesaluz.jpg",
-                            colores: ["Natural", "Blanco"],
-                            tamanos: ["Normal"],
-                            precios: {"Normal": 8500},
-                            materiales: ["Madera de pino", "MDF"],
-                            stock: 3
-                        }
-                    ]
-                },
-                { 
-                    id: "Carteleria", 
-                    imagen: "img/cartel.jpg", 
-                    productos: [
-                        {
-                            id: 4,
-                            nombre: "Cartel simple",
-                            descripcion: "Cartel básico para negocios.",
-                            imagen: "img/cartel1.jpg",
-                            tamanos: ["Pequeño", "Normal", "Grande"],
-                            precios: {"Pequeño": 2000, "Normal": 4000, "Grande": 6000},
                             stock: 5
                         }
                     ]
@@ -189,67 +211,73 @@ async function cargarStock() {
     mostrarCategorias();
 }
 
-// Función para iniciar carrusel de una categoría
-function iniciarCarruselCategoria(categoriaId, imgElement) {
-    const imagenes = carruselesConfig[categoriaId];
-    if (!imagenes || imagenes.length === 0) return;
+// Función para configurar navegación manual de imágenes
+function configurarNavegacionManual(productoId) {
+    const imagenes = carruselesProductos[productoId];
+    
+    // Remover flechas existentes
+    const flechaIzqExistente = document.getElementById('flecha-izq-modal');
+    const flechaDerExistente = document.getElementById('flecha-der-modal');
+    if (flechaIzqExistente) flechaIzqExistente.remove();
+    if (flechaDerExistente) flechaDerExistente.remove();
+    
+    // Si no hay carrusel para este producto, mostrar imagen normal
+    if (!imagenes || imagenes.length <= 1) {
+        detalleImg.src = productoActual.imagen || "img/personalizado.jpg";
+        return;
+    }
     
     let indiceActual = 0;
     
-    // Crear segunda imagen para crossfade CON TODAS LAS CLASES
-    const imgElement2 = imgElement.cloneNode(true);
-    imgElement2.className = imgElement.className; // Copiar clases
-    imgElement2.style.opacity = "0";
-    imgElement2.style.zIndex = "1";
-    imgElement.parentElement.appendChild(imgElement2);
-    imgElement.style.zIndex = "2";
-    
     // Establecer primera imagen
-    imgElement.src = imagenes[0];
-    imgElement.style.opacity = "1";
+    detalleImg.src = imagenes[0];
     
-    let imagenActiva = imgElement;
-    let imagenInactiva = imgElement2;
-    
-    // Crear intervalo para cambiar imágenes con crossfade
-    const intervalo = setInterval(() => {
-        indiceActual = (indiceActual + 1) % imagenes.length;
-        
-        // Precargar en la imagen inactiva
-        imagenInactiva.src = imagenes[indiceActual];
-        
-        // Hacer crossfade
-        imagenActiva.style.opacity = "0";
-        imagenInactiva.style.opacity = "1";
-        
-        // Intercambiar referencias
-        [imagenActiva, imagenInactiva] = [imagenInactiva, imagenActiva];
-    }, 3000);
-    
-    carruselesActivos[categoriaId] = intervalo;
-}
-
-// Función para detener todos los carruseles
-function detenerCarruseles() {
-    Object.values(carruselesActivos).forEach(intervalo => {
-        clearInterval(intervalo);
+    // Crear flecha izquierda
+    const flechaIzq = document.createElement('button');
+    flechaIzq.id = 'flecha-izq-modal';
+    flechaIzq.className = 'flecha-modal flecha-izq';
+    flechaIzq.innerHTML = '◀';
+    flechaIzq.addEventListener('click', () => {
+        indiceActual = (indiceActual - 1 + imagenes.length) % imagenes.length;
+        detalleImg.src = imagenes[indiceActual];
     });
-    carruselesActivos = {};
+    
+    // Crear flecha derecha
+    const flechaDer = document.createElement('button');
+    flechaDer.id = 'flecha-der-modal';
+    flechaDer.className = 'flecha-modal flecha-der';
+    flechaDer.innerHTML = '▶';
+    flechaDer.addEventListener('click', () => {
+        indiceActual = (indiceActual + 1) % imagenes.length;
+        detalleImg.src = imagenes[indiceActual];
+    });
+    
+    // Asegurar que el contenedor tenga posición relativa
+    const contenedorImagen = detalleImg.parentElement;
+    contenedorImagen.style.position = 'relative';
+    
+    // Agregar flechas al contenedor
+    contenedorImagen.appendChild(flechaIzq);
+    contenedorImagen.appendChild(flechaDer);
 }
 
-// Mostrar tarjetas de categorías
+// Mostrar tarjetas de categorías - SIN CARRUSEL, IMÁGENES FIJAS
 function mostrarCategorias() {
     categoriasContainer.innerHTML = "";
     const cats = data.categorias || [];
     
-    // Detener carruseles anteriores
-    detenerCarruseles();
+    // Mapeo de imágenes fijas por categoría
+    const imagenesFijas = {
+        "Gigantografias": "img/gigantostitch.jpg",
+        "Carteleria": "img/cartel.jpg",
+        "HomeDeco": "img/decoportada.jpg"
+    };
     
     cats.forEach(cat => {
         const div = document.createElement("div");
         div.className = "categoria";
         
-        // Agregar clases especiales para cada categoría - NORMALIZADO A LOWERCASE
+        // Agregar clases especiales para cada categoría
         const catIdLower = cat.id.toLowerCase();
         if (catIdLower === "gigantografias") {
             div.classList.add("categoria-gigantografias");
@@ -259,20 +287,15 @@ function mostrarCategorias() {
             div.classList.add("categoria-homedeco");
         }
         
-        // Verificar si tiene carrusel configurado
-        const tieneCarrusel = carruselesConfig[cat.id];
-        const img = tieneCarrusel 
-            ? carruselesConfig[cat.id][0] 
-            : (cat.imagen && cat.imagen.trim() ? cat.imagen : "img/personalizado.jpg");
+        // Usar imagen fija
+        const img = imagenesFijas[cat.id] || cat.imagen || "img/personalizado.jpg";
         
-        // Crear wrapper para la imagen
         const imgWrapper = document.createElement("div");
         imgWrapper.className = "imagen-wrapper";
         
         const imgElement = document.createElement("img");
         imgElement.src = img;
         imgElement.alt = cat.nombre || cat.id;
-        imgElement.className = tieneCarrusel ? "categoria-img-carrusel" : "";
         imgElement.onerror = function() {
             this.onerror = null;
             this.src = 'img/personalizado.jpg';
@@ -287,11 +310,6 @@ function mostrarCategorias() {
         
         div.addEventListener("click", () => mostrarProductosCategoria(cat.id));
         categoriasContainer.appendChild(div);
-        
-        // Iniciar carrusel si aplica
-        if (tieneCarrusel) {
-            iniciarCarruselCategoria(cat.id, imgElement);
-        }
     });
 
     // Personalizado
@@ -324,9 +342,6 @@ function mostrarProductosCategoria(categoriaId) {
     const cat = data.categorias.find(c => c.id === categoriaId);
     if (!cat) return;
 
-    // Detener carruseles al salir de categorías
-    detenerCarruseles();
-
     categoriasContainer.classList.add("oculto");
     productosContainer.classList.remove("oculto");
     productosContainer.innerHTML = "";
@@ -337,7 +352,6 @@ function mostrarProductosCategoria(categoriaId) {
     volver.addEventListener("click", () => {
         productosContainer.classList.add("oculto");
         categoriasContainer.classList.remove("oculto");
-        // Reiniciar carruseles al volver
         mostrarCategorias();
     });
     productosContainer.appendChild(volver);
@@ -360,7 +374,7 @@ function mostrarProductosCategoria(categoriaId) {
         }
         
         div.innerHTML = `
-            <div class="imagen-container ${!tieneStock ? 'sin-stock' : ''} ${esProximamente ? 'proximamente' : ''}">
+            <div class="imagen-container ${!tieneStock ? 'sin-stock' : ''} ${esProximamente ? 'proximamente' : ''}" data-producto-id="${prod.id}">
                 <img src="${imgUrl}" alt="${prod.nombre}" onerror="this.onerror=null;this.src='img/personalizado.jpg'">
                 ${etiquetaEntregaHTML}
                 ${!tieneStock ? '<div class="sin-stock-badge">SIN STOCK</div>' : ''}
@@ -375,6 +389,14 @@ function mostrarProductosCategoria(categoriaId) {
             div.querySelector(".btn-ver").addEventListener("click", () => abrirModalProducto(cat.id, prod.id));
         }
         productosContainer.appendChild(div);
+        
+        // Iniciar carrusel si el producto lo tiene configurado
+        if (carruselesProductos[prod.id]) {
+            const imgContainer = div.querySelector(".imagen-container");
+            setTimeout(() => {
+                iniciarCarruselPortada(prod.id, imgContainer);
+            }, 100);
+        }
     });
 
     const pers = document.createElement("div");
@@ -449,7 +471,9 @@ function abrirModalProducto(categoriaId, productoId) {
 
     detalleNombre.textContent = productoActual.nombre;
     detalleDescripcion.textContent = productoActual.descripcion || "";
-    detalleImg.src = productoActual.imagen || "img/personalizado.jpg";
+    
+    // Configurar navegación manual en lugar de carrusel automático
+    configurarNavegacionManual(productoActual.id);
 
     medidaPersonalizadaInput.value = "";
     document.getElementById("color-personalizado").value = "";
@@ -638,7 +662,6 @@ function inicializarEventListenersModal() {
     btnSobreNosotros.forEach(boton => {
       boton.addEventListener("click", () => {
         if (sobreNosotrosContainer.classList.contains("oculto")) {
-          detenerCarruseles();
           categoriasContainer.classList.add("oculto");
           productosContainer.classList.add("oculto");
           sobreNosotrosContainer.classList.remove("oculto");
@@ -697,7 +720,8 @@ function actualizarPrecio() {
             }
         } else if (productoActual.precioSeleccionado > 0) {
             const precioFormateado = productoActual.precioSeleccionado.toLocaleString('es-AR');
-            detallePrecio.innerHTML = `<strong>${precioFormateado}</strong>`;
+            // AGREGAR EL SIGNO $ AQUÍ
+            detallePrecio.innerHTML = `<strong>$${precioFormateado}</strong>`;
         } else {
             detallePrecio.innerHTML = `<strong>Precio a consultar</strong>`;
         }
@@ -714,7 +738,8 @@ function actualizarPrecio() {
     }
     if (productoActual.precio && productoActual.precio > 0) {
         const precioFormateado = productoActual.precio.toLocaleString('es-AR');
-        detallePrecio.innerHTML = `<strong>${precioFormateado}</strong>`;
+        // AGREGAR EL SIGNO $ AQUÍ
+        detallePrecio.innerHTML = `<strong>$${precioFormateado}</strong>`;
         return;
     }
     detallePrecio.innerHTML = `<strong>Precio a consultar</strong>`;
@@ -772,12 +797,20 @@ function calcularPrecioUnitario() {
     return productoActual.precio || 0;
 }
 
-btnCancelar.addEventListener("click", () => productoModal.classList.add("oculto"));
+btnCancelar.addEventListener("click", () => {
+    productoModal.classList.add("oculto");
+});
+
 if (cerrarProducto) {
-  cerrarProducto.addEventListener("click", () => productoModal.classList.add("oculto"));
+  cerrarProducto.addEventListener("click", () => {
+      productoModal.classList.add("oculto");
+  });
 }
+
 productoModal.addEventListener("click", e => { 
-    if (e.target === productoModal) productoModal.classList.add("oculto"); 
+    if (e.target === productoModal) {
+        productoModal.classList.add("oculto");
+    }
 });
 
 function mostrarNotificacion(mensaje, tipo = "success") {
@@ -808,7 +841,7 @@ function mostrarCarrito() {
         li.style.padding = "20px";
         listaCarrito.appendChild(li);
         
-        // Mostrar $0 cuando el carrito está vacío
+        // Esto ya está bien, muestra $0
         total.innerHTML = `Total: <strong>$0</strong>`;
     } else {
         carrito.forEach((it, idx) => {
@@ -818,7 +851,7 @@ function mostrarCarrito() {
 
             const li = document.createElement("li");
             
-            const precioTexto = esConsultar ? 'Precio a consultar' : `${precio.toLocaleString('es-AR')}`;
+            const precioTexto = esConsultar ? 'Precio a consultar' : `$${(it.precioUnitario * it.cantidad).toLocaleString('es-AR')}`;
             
             li.innerHTML = `
                 <div class="item-carrito">
@@ -847,8 +880,8 @@ function mostrarCarrito() {
             listaCarrito.appendChild(li);
         });
 
-        // Mostrar total con formato correcto
-        total.textContent = `Total: ${suma.toLocaleString('es-AR')}`;
+        // AGREGAR EL SIGNO $ AL TOTAL
+        total.textContent = `Total: $${suma.toLocaleString('es-AR')}`;
 
         listaCarrito.querySelectorAll(".btn-eliminar").forEach(btn => {
             btn.addEventListener("click", (e) => {
