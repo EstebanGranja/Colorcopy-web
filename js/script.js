@@ -78,7 +78,8 @@ const telefonoWhats = "5493547656901";
 
 // Configuración de carruseles para productos específicos
 const carruselesProductos = {
-    17: ["img/cartelbano.jpg", "img/cartelwifi.jpg", "img/cartelwarning.jpg"]
+    17: ["img/cartelwarning.jpg", "img/alcorte.jpg"], // Cartel logo
+    18: ["img/cartelbano.jpg", "img/cartelwifi.jpg"]  // Cartel señalizador
 };
 
 let carruselesPortadaActivos = new Map();
@@ -90,6 +91,9 @@ function iniciarCarruselPortada(productoId, imgContainer) {
     
     const imgElement = imgContainer.querySelector('img');
     if (!imgElement) return;
+    
+    // Usar la primera imagen del carrusel, NO la imagen principal
+    imgElement.src = imagenes[0];
     
     // Crear segunda imagen para crossfade
     const imgElement2 = imgElement.cloneNode(true);
@@ -118,14 +122,10 @@ function iniciarCarruselPortada(productoId, imgContainer) {
     imgContainer.appendChild(imgElement2);
     
     let indiceActual = 0;
-    let direccion = 1; // 1 = derecha a izquierda, -1 = izquierda a derecha
-    
-    // Establecer primera imagen
-    imgElement.src = imagenes[0];
+    let direccion = 1;
     
     let imagenActiva = imgElement;
     let imagenInactiva = imgElement2;
-    
     
     // Cambiar imagen y dirección cada 4 segundos
     const intervalo = setInterval(() => {
@@ -135,6 +135,8 @@ function iniciarCarruselPortada(productoId, imgContainer) {
         // Siguiente imagen
         indiceActual = (indiceActual + 1) % imagenes.length;
         
+        // Establecer nueva imagen en la imagen inactiva
+        imagenInactiva.src = imagenes[indiceActual];
         
         // Crossfade
         imagenActiva.style.opacity = "0";
@@ -146,6 +148,7 @@ function iniciarCarruselPortada(productoId, imgContainer) {
     
     carruselesPortadaActivos.set(productoId, intervalo);
 }
+
 
 // Función para detener carrusel de portada
 function detenerCarruselPortada(productoId) {
