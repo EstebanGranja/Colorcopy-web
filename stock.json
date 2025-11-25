@@ -1,0 +1,261 @@
+{
+  "categorias": [
+    {
+      "id": "Gigantografias",
+      "nombre": "Gigantografías",
+      "imagen": "img/gigantostitch.jpg",
+      "productos": [
+        {
+          "id": 1,
+          "nombre": "Gigantografía Stitch",
+          "descripcion": "Diseño divertido y colorido de Stitch. Disponible para cualquier diseño o imágen personalizada",
+          "imagen": "img/gigantostitch.jpg",
+          "medidas": ["60x80cm"],
+          "precios": [80000],
+          "material": ["MDF (3mm)", "PVC espumado (3mm)"],
+          "tiempo_entrega": "Entre 5 y 7 dias de demora",
+          "stock": 10
+        },
+        {
+          "id": 3,
+          "nombre": "Panel Fotográfico",
+          "descripcion": "Panel decorativo con orificios para asomar el rostro y tomarse fotos divertidas. Disponible en cualquier diseño personalizado",
+          "imagen": "img/oktober.jpg",
+          "medidas": ["170x100cm"],
+          "precios": [90000],
+          "material": ["MDF (9mm)"],
+          "tiempo_entrega": "Entre 5 y 7 dias de demora",
+          "stock": 5
+        },
+        {
+          "id": 5,
+          "nombre": "Gigantografía Personaje",
+          "descripcion": "Homenaje al mejor jugador del mundo. Disponible en cualquier diseño o imágen personalizada",
+          "imagen": "img/gigantomessi.jpg",
+          "medidas": ["170x50cm"],
+          "precios": [100000],
+          "material": ["MDF (3mm)", "MDF (9mm)", "PVC espumado (3mm)"],
+          "tiempo_entrega": "Entre 5 y 7 dias de demora",
+          "stock": 7
+        }
+      ]
+    },
+    {
+      "id": "Carteleria",
+      "nombre": "Cartelería",
+      "imagen": "img/cartel.jpg",
+      "productos": [
+        {
+          "id": 8,
+          "nombre": "Cartel Simple",
+          "descripcion": "Cartelería básica para negocios y casas, completamente personalizable",
+          "imagen": "img/cartel1.jpg",
+          "medidas": ["15x30cm"],
+          "material": ["MDF laminado grabado (3mm)", "Madera de pino (12mm)"],
+          "precios": [12000],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 20
+        },
+        {
+          "id": 17,
+          "nombre": "Cartel Logo",
+          "descripcion": "Carteles con logos y diseños personalizados para negocios",
+          "imagen": "img/cartelwarning.jpg",
+          "medidas": ["60x60cm"],
+          "material": ["MDF (5mm)", "MDF (9mm)"],
+          "precios": [70000],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 15
+        },
+        {
+          "id": 18,  
+          "nombre": "Cartel Señalizador",
+          "descripcion": "Carteles señalizadores y decorativos con diferentes diseños disponibles",
+          "imagen": "img/cartelbano.jpg",
+          "medidas": ["15x25cm", "20x20cm"],
+          "material": ["MDF (5mm)", "Madera de pino (5mm)"],
+          "precios": [17000, 25000, 60000],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 15
+        },
+        {
+          "id": 11,
+          "nombre": "Cartel para comercio",
+          "descripcion": "Carteles de neón para locales de comercio, personalizables",
+          "imagen": "img/cartellomito.jpg",
+          "medidas": ["20x50cm"],
+          "material": ["MDF (9mm)"],
+          "precios": [50000],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 30
+        },
+        {
+          "id": 9,
+          "nombre": "Cartel numeración",
+          "descripcion": "Carteles para oficinas y espacios de trabajo. Personalizable",
+          "imagen": "img/cartel305.jpg",
+          "medidas": ["15x30cm"],
+          "material": ["MDF (5mm) sobre MDF (12mm)", "MDF (5mm) sobre MDF (9mm)", "MDF (5mm) sobre madera de pino (12mm)"],
+          "precios": [26000],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 12
+        },
+        {
+          "id": 12,
+          "nombre": "Cartel corporeo",
+          "descripcion": "Letras en madera, variedad de tamaños y diseños personalizables",
+          "imagen": "img/cartelBBB.jpg",
+          "medidas": ["Personalizado"],
+          "material": ["MDF (5mm)", "MDF (9mm)", "MDF (12mm)", "Madera de pino (12mm)"],
+          "precios": ["Entre 5 y 7 dias de demora"],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 10
+        },
+        {
+          "id": 14,
+          "nombre": "Cartel Juguetes",
+          "descripcion": "Cartelería para jugueterías",
+          "imagen": "img/carteljuguetes.jpg",
+          "medidas": ["15x30cm"],
+          "material": ["MDF (3mm)", "MDF (5mm)"],
+          "precios": [7000],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 7
+        },
+        {
+          "id": 15,
+          "nombre": "Cartel Luminoso",
+          "descripcion": "Cartel con iluminación LED, personalizable",
+          "imagen": "img/cartel_luminoso.jpg",
+          "medidas": ["50x70cm", "70x100cm", "100x140cm"],
+          "precios": ["A consultar", "A consultar", "A consultar"],
+          "proximamente": true,
+          "stock": 5
+        },
+        {
+          "id": 16,
+          "nombre": "Cartel Polyfan",
+          "descripcion": "Carteles de polyfan personalizables",
+          "imagen": "img/polyfan.jpg",
+          "material": ["Polyfan (20mm)"],
+          "acabado": ["Pintado", "Sin pintar"],
+          "precios": ["A consultar"],
+          "stock": 20
+        }
+      ]
+    },
+    {
+      "id": "HomeDeco",
+      "nombre": "Home Deco",
+      "imagen": "img/decoportada.jpg",
+      "productos": [
+        {
+          "id": 19,
+          "nombre": "Decoración Montaña",
+          "descripcion": "Decoración en MDF con diseño de montaña",
+          "imagen": "img/decomontana.jpg",
+          "medidas": ["35x35cm", "60x60cm"],
+          "precios": [17000, 27000],
+          "material": ["MDF"],
+          "acabado": ["Pintado (negro)", "Sin pintar"],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 15
+        },
+        {
+          "id": 20,
+          "nombre": "Decoración Bart",
+          "descripcion": "Diseño divertido de Bart Simpson para fans de la serie",
+          "imagen": "img/decobart.jpg",
+          "medidas": ["30x30cm", "40x40cm"],
+          "precios": [12000, 12000],
+          "material": ["MDF"],
+          "acabado": ["Pintado (negro)", "Sin pintar"],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 10
+        },
+        {
+          "id": 21,
+          "nombre": "Decoración Gato",
+          "descripcion": "Tierna decoración con motivo de gato, variedad de diseños disponibles",
+          "imagen": "img/decogato.jpg",
+          "medidas": ["50x35cm"],
+          "precios": [18000],
+          "material": ["MDF"],
+          "acabado": ["Pintado (negro)", "Sin pintar"],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 12
+        },
+        {
+          "id": 22,
+          "nombre": "Decoración Goku",
+          "descripcion": "Diseño de Goku con iluminacion LED",
+          "imagen": "img/decogoku.jpg",
+          "medidas": ["40x60cm", "60x90cm"],
+          "precios": [4200, 4200],
+          "material": ["Pintado", "Ploteado"],
+          "proximamente": true,
+          "stock": 7
+        },
+        {
+          "id": 23,
+          "nombre": "Decoración Grut",
+          "descripcion": "Diseño exclusivo Grut, moderno y minimalista",
+          "imagen": "img/decogrut.jpg",
+          "medidas": ["25x45cm", "50x70cm"],
+          "precios": [25000, 25000],
+          "material": ["MDF"],
+          "acabado": ["Pintado (negro)", "Sin pintar"],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 6
+        },
+        {
+          "id": 25,
+          "nombre": "Percheros Capybara",
+          "descripcion": "Percheros decorativos con forma de capybaras",
+          "imagen": "img/decoperchero.jpg",
+          "medidas": ["10cm, 15cm y 20cm"],
+          "precios": [17000],
+          "material": ["Madera de pino"],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 9
+        },
+        {
+          "id": 26,
+          "nombre": "Percheros Circulares",
+          "descripcion": "Percheros con diseño circular y moderno",
+          "imagen": "img/decoperchero1.jpg",
+          "medidas": ["10cm, 15cm y 20cm"],
+          "precios": [10000],
+          "material": ["Madera de pino"],
+          "acabado": ["Pintado (negro)", "Sin pintar"],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 8
+        },
+        {
+          "id": 27,
+          "nombre": "Decoración 1 UP",
+          "descripcion": "Articulo de decoración con diseño 1 UP",
+          "imagen": "img/decoseta.jpg",
+          "medidas": ["20x40cm"],
+          "precios": [15000],
+          "material": ["MDF"],
+          "acabado": ["Pintado (negro)", "Sin pintar"],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 4
+        },
+        {
+          "id": 28,
+          "nombre": "Decoración Arbol",
+          "descripcion": "Elemento decorativo con diseño de árbol, variedad de diseños disponibles en MDF",
+          "imagen": "img/decoarbol.jpg",
+          "medidas": ["50x50cm"],
+          "precios": [24000],
+          "material": ["MDF"],
+          "acabado": ["Pintado (negro)", "Sin pintar"],
+          "tiempo_entrega": "Entrega inmediata",
+          "stock": 8
+        }
+      ]
+    }
+  ]
+}

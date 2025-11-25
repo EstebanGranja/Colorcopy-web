@@ -161,37 +161,20 @@ function detenerCarruselPortada(productoId) {
 
 // Cargar stock.json
 async function cargarStock() {
-    categoriasContainer.innerHTML = '<div class="cargando">Cargando categorías...</div>';
-    try {
-        const resp = await fetch("https://raw.githubusercontent.com/EstebanGranja/colorcopy-stock/main/stock.json");
-        if (!resp.ok) throw new Error("No se pudo cargar stock.json");
-        data = await resp.json();
-        console.log("Datos cargados:", data);
-    } catch (e) {
-        console.error("Error cargando stock.json, usando fallback demo", e);
-        data = {
-            categorias: [
-                { 
-                    id: "Decoracion", 
-                    imagen: "img/decoracion.jpg", 
-                    productos: [
-                        {
-                            id: 1,
-                            nombre: "Gigantografía Chicas Superpoderosas",
-                            descripcion: "Cuadro MDF o PVC, diferentes tamaños y colores.",
-                            imagen: "img/decor1_azul.jpg",
-                            colores: ["Azul", "Rojo", "Verde"],
-                            tamanos: ["Pequeño", "Normal", "Grande"],
-                            precios: {"Pequeño": 2500, "Normal": 3500, "Grande": 5000},
-                            materiales: ["MDF", "PVC espumado"],
-                            stock: 5
-                        }
-                    ]
-                }
-            ]
-        };
+  categoriasContainer.innerHTML = '<div class="cargando">Cargando productos...</div>';
+  
+  try {
+    console.log("Cargando stock.json local...");
+    const resp = await fetch("stock.json");
+    
+    if (!resp.ok) {
+      throw new Error(`HTTP ${resp.status}`);
     }
     
+    data = await resp.json();
+    console.log("✓ Datos cargados exitosamente:", data);
+    
+    // Llenar stockMap
     if (data.categorias) {
         data.categorias.forEach(cat => {
             cat.productos = cat.productos || [];
@@ -201,17 +184,22 @@ async function cargarStock() {
         });
     }
     
-    if (data.categorias) {
-        data.categorias.forEach(cat => {
-            cat.productos.forEach(p => {
-                if (p.tamanos && !p.medidas) p.medidas = p.tamanos;
-                if (p.colores && !p.color) p.color = p.colores;
-                if (p.materiales && !p.material) p.material = p.materiales;
-            });
-        });
-    }
-
+    // ESTA LÍNEA FALTABA - Mostrar las categorías
     mostrarCategorias();
+    
+  } catch (e) {
+    console.error("Error cargando stock.json:", e);
+    categoriasContainer.innerHTML = `
+      <div class="cargando" style="color: #d32f2f;">
+        ⚠️ No se pudieron cargar los productos.<br>
+        Error: ${e.message}<br>
+        <button onclick="location.reload()" style="margin-top: 10px; padding: 8px 16px; cursor: pointer;">
+          Recargar
+        </button>
+      </div>
+    `;
+    return;
+  }
 }
 
 // Función para configurar navegación manual de imágenes
