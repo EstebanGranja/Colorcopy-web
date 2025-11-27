@@ -63,7 +63,7 @@
           "imagen": "img/cartelwarning.jpg",
           "medidas": ["60x60cm"],
           "material": ["MDF (5mm)", "MDF (9mm)"],
-          "precios": [70000],
+          "precios": ["A consultar"],
           "tiempo_entrega": "Entrega inmediata",
           "stock": 15
         },

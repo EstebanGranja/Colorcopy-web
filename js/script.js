@@ -78,7 +78,7 @@ const telefonoWhats = "5493547656901";
 
 // Configuración de carruseles para productos específicos
 const carruselesProductos = {
-    17: ["img/cartelwarning.jpg", "img/alcorte.jpg"], // Cartel logo
+    17: ["img/cartelwarning.jpg", "img/alcorte.jpg", "img/cartel_black1.jpeg", "img/cartel_black2.jpeg"], // Cartel logo
     18: ["img/cartelbano.jpg", "img/cartelwifi.jpg"]  // Cartel señalizador
 };
 
